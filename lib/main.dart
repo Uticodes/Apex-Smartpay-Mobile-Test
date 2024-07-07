@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-void main() {
+import 'data/services/dio_wrapper/dio_client_wrapper.dart';
+import 'di/injection.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
+  await getIt<DioClientWrapper>().initialize();
   runApp(const MyApp());
 }
 

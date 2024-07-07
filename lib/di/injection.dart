@@ -1,0 +1,12 @@
+import 'package:get_it/get_it.dart';
+import 'package:injectable/injectable.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:apex_smartpay_mobile_test/di/injection.config.dart';
+
+final getIt = GetIt.instance;
+
+@InjectableInit()
+Future<void> configureDependencies() async {
+  getIt.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
+  getIt.init();
+}
