@@ -17,14 +17,12 @@ class AuthRepository {
 
   AuthRepository(this._dioClient, this._secureStorage);
 
-  Future<RegisterUserResponse> register({
-    required String fullName,
-    required String userName,
-    required String email,
-    required String country,
-    required String password
-  }) async {
-
+  Future<RegisterUserResponse> register(
+      {required String fullName,
+      required String userName,
+      required String email,
+      required String country,
+      required String password}) async {
     final body = {
       'full_name': fullName,
       'username': userName,
@@ -58,7 +56,8 @@ class AuthRepository {
     return GetEmailTokenResponse.fromJson(response.data);
   }
 
-  Future<VerifyEmailTokenResponse> verifyEmailToken(String email, String token) async {
+  Future<VerifyEmailTokenResponse> verifyEmailToken(
+      String email, String token) async {
     final body = {'email': email, 'token': token};
     debugPrint("verifyEmailToken body is: $body");
     final response = await _dioClient.post('/auth/email/verify', body);
@@ -78,5 +77,4 @@ class AuthRepository {
       throw SmartPayAppException(response.data['message']);
     }
   }
-
 }

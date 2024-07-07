@@ -37,32 +37,42 @@ class DioClientWrapper {
   }
 
   Future<Response<dynamic>> get(url, {Options? options, dynamic data}) async {
-    return _makeRequest(() => _dioClient!.get(url, options: options, queryParameters: data));
+    return _makeRequest(
+        () => _dioClient!.get(url, options: options, queryParameters: data));
   }
 
   Future<Response<dynamic>> post(
-      url,
-      data, {
-        Options? options,
-        ProgressCallback? onSendProgress,
-        ProgressCallback? onReceiveProgress,
-      }) async {
-    return _makeRequest(() => _dioClient!.post(url, data: data, options: options, onSendProgress: onSendProgress, onReceiveProgress: onReceiveProgress));
+    url,
+    data, {
+    Options? options,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    return _makeRequest(() => _dioClient!.post(url,
+        data: data,
+        options: options,
+        onSendProgress: onSendProgress,
+        onReceiveProgress: onReceiveProgress));
   }
 
   Future<Response<dynamic>> put(url, data, {Options? options}) async {
-    return _makeRequest(() => _dioClient!.put(url, data: data, options: options));
+    return _makeRequest(
+        () => _dioClient!.put(url, data: data, options: options));
   }
 
   Future<Response<dynamic>> patch(url, {Options? options, dynamic data}) async {
-    return _makeRequest(() => _dioClient!.patch(url, data: data, options: options));
+    return _makeRequest(
+        () => _dioClient!.patch(url, data: data, options: options));
   }
 
-  Future<Response<dynamic>> delete(url, {Options? options, dynamic data}) async {
-    return _makeRequest(() => _dioClient!.delete(url, data: data, options: options));
+  Future<Response<dynamic>> delete(url,
+      {Options? options, dynamic data}) async {
+    return _makeRequest(
+        () => _dioClient!.delete(url, data: data, options: options));
   }
 
-  Future<Response<dynamic>> _makeRequest(Future<Response<dynamic>> Function() dioRequest) async {
+  Future<Response<dynamic>> _makeRequest(
+      Future<Response<dynamic>> Function() dioRequest) async {
     try {
       return await dioRequest.call();
     } on DioException catch (e) {
@@ -71,7 +81,8 @@ class DioClientWrapper {
         case DioExceptionType.sendTimeout:
         case DioExceptionType.receiveTimeout:
         case DioExceptionType.connectionTimeout:
-          throw SmartPayAppException("Your internet connection is unstable, please wait and try again");
+          throw SmartPayAppException(
+              "Your internet connection is unstable, please wait and try again");
 
         case DioExceptionType.cancel:
           throw SmartPayAppException("Request cancelled");
@@ -80,7 +91,8 @@ class DioClientWrapper {
           throw SmartPayAppException("An unknown error occurred");
 
         case DioExceptionType.badResponse:
-          if (e.response == null) throw SmartPayAppException("An unknown error occurred");
+          if (e.response == null)
+            throw SmartPayAppException("An unknown error occurred");
           switch (e.response!.statusCode) {
             case 409:
             case 400:
