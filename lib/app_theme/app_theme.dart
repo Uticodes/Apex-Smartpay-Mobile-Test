@@ -17,6 +17,7 @@ class AppTheme {
   static const lightBackgroundAppBar = Color(0xFFF9FAFB);
   static const textBoldBlack = Color(0xFF111827);
   static const textBlack = Color(0xFF6B7280);
+  static const lightGrey = Color(0xFFE5E7EB);
   static const grey50 = Color(0xFFEFEFEF);
   static const grey100 = Color(0xFFB3B3B3);
   static const grey300 = Color(0xFFDDDDDD);
@@ -26,6 +27,7 @@ class AppTheme {
   static const darkModeButtonDisabledColor = Color(0xFF333333);
   static const faintBlack = Color(0xFF4C4C4C);
   static const textTertiaryColor = Color(0xFFA6A6A6);
+  static const btnBorderColor = Color(0xffE5E7EB);
 
   static final _buttonTextStyle = const TextStyle(
     fontFamily: 'SF Pro Display',
@@ -42,9 +44,9 @@ class AppTheme {
     useMaterial3: true,
     canvasColor: white,
     brightness: Brightness.light,
-    scaffoldBackgroundColor: lightBackgroundAppBar,
+    scaffoldBackgroundColor: white,
     appBarTheme: AppBarTheme(
-      backgroundColor: lightBackgroundAppBar,
+      backgroundColor: white,
       elevation: 0,
       titleTextStyle: const TextStyle(
         fontFamily: fontFamily,
@@ -122,7 +124,7 @@ class AppTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      fillColor: grey50,
+      fillColor: lightBackgroundAppBar,
       filled: true,
       isDense: true,
       border: OutlineInputBorder(
@@ -130,11 +132,11 @@ class AppTheme {
         borderSide: const BorderSide(color: textBoldBlack),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: grey50),
+        borderSide: const BorderSide(color: skyBlueColor),
         borderRadius: BorderRadius.circular(8),
       ),
       enabledBorder: OutlineInputBorder(
-        borderSide: const BorderSide(color: grey50),
+        borderSide: const BorderSide(color: lightBackgroundAppBar),
         borderRadius: BorderRadius.circular(8),
       ),
     ),

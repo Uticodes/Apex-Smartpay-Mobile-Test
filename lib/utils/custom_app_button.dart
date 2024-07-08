@@ -37,9 +37,14 @@ class AppButton extends StatelessWidget {
               foregroundColor: WidgetStatePropertyAll(textColor),
             ),
         onPressed: !isEnabled ? null : onPressed,
-        child: child ?? Center(child: TextView(text:title!, color: AppTheme.white,)),
+        child: child ??
+            Center(
+                child: TextView(
+              text: title!,
+              fontWeight: FontWeight.bold,
+              color: isEnabled ? AppTheme.white : AppTheme.darkColor,
+            )),
       ),
     );
   }
 }
-
