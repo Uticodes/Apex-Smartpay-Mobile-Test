@@ -14,9 +14,11 @@ import 'package:apex_smartpay_mobile_test/data/repositories/auth_repository/auth
     as _i7;
 import 'package:apex_smartpay_mobile_test/data/services/dio_wrapper/dio_client_wrapper.dart'
     as _i5;
-import 'package:apex_smartpay_mobile_test/di/app_module.dart' as _i9;
+import 'package:apex_smartpay_mobile_test/di/app_module.dart' as _i10;
 import 'package:apex_smartpay_mobile_test/presentation/get_email_token_screen/cubit/get_token_cubit.dart'
     as _i8;
+import 'package:apex_smartpay_mobile_test/presentation/signup_screen/cubit/signup_cubit.dart'
+    as _i9;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i3;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
@@ -46,8 +48,10 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.factory<_i8.GetTokenCubit>(
         () => _i8.GetTokenCubit(gh<_i7.AuthRepository>()));
+    gh.factory<_i9.SignUpCubit>(
+        () => _i9.SignUpCubit(gh<_i7.AuthRepository>()));
     return this;
   }
 }
 
-class _$AppModule extends _i9.AppModule {}
+class _$AppModule extends _i10.AppModule {}

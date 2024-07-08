@@ -2,25 +2,37 @@ class LoginUserResponse {
   bool? status;
   String? message;
   LoginData? data;
+  Map<String, List<String>>? errors;
 
-  LoginUserResponse({this.status, this.message, this.data});
+  LoginUserResponse({this.status, this.message, this.data, this.errors});
 
   factory LoginUserResponse.fromJson(Map<String, dynamic> json) {
     return LoginUserResponse(
-        status: json['status'] as bool?,
-        message: json['message'] as String?,
-        data: LoginData.fromJson(json['data']));
+      status: json['status'] as bool?,
+      message: json['message'] as String?,
+      data: LoginData.fromJson(json['data']),
+      errors: (json['errors'] as Map<String, dynamic>?)?.map(
+        (key, value) => MapEntry(key, List<String>.from(value)),
+      ),
+    );
   }
 
-  Map<String, dynamic> toJson() =>
-      {'status': status, 'message': message, 'data': data?.toJson()};
+  Map<String, dynamic> toJson() => {
+        'status': status,
+        'message': message,
+        'data': data?.toJson(),
+        'errors': errors,
+      };
 }
 
 class LoginData {
   LoginUserData? user;
   String? token;
 
-  LoginData({this.user, this.token,});
+  LoginData({
+    this.user,
+    this.token,
+  });
 
   factory LoginData.fromJson(Map<String, dynamic> json) {
     return LoginData(
@@ -30,9 +42,9 @@ class LoginData {
   }
 
   Map<String, dynamic> toJson() => {
-    'user': user?.toJson(),
-    'token': token,
-  };
+        'user': user?.toJson(),
+        'token': token,
+      };
 }
 
 class LoginUserData {
@@ -66,18 +78,17 @@ class LoginUserData {
       phoneCountry: json['phone_country'] as String?,
       country: json['country'] as String?,
       avatar: json['avatar'] as String?,
-
-    );}
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'full_name': fullName,
-    'username': userName,
-    'email': email,
-    'phone': phone,
-    'phone_country': phoneCountry,
-    'country': country,
-    'avatar': avatar,
-  };
-
+        'id': id,
+        'full_name': fullName,
+        'username': userName,
+        'email': email,
+        'phone': phone,
+        'phone_country': phoneCountry,
+        'country': country,
+        'avatar': avatar,
+      };
 }

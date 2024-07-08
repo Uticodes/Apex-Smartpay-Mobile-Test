@@ -20,7 +20,9 @@ mixin _$GetTokenState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String errorMessage) error,
+    required TResult Function(
+            String errorMessage, Map<String, List<String>>? errors)
+        error,
     required TResult Function(GetEmailTokenResponse response) success,
     required TResult Function(VerifyEmailTokenResponse response)
         verifyEmailToken,
@@ -30,7 +32,8 @@ mixin _$GetTokenState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String errorMessage)? error,
+    TResult? Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult? Function(GetEmailTokenResponse response)? success,
     TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) =>
@@ -39,7 +42,8 @@ mixin _$GetTokenState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String errorMessage)? error,
+    TResult Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult Function(GetEmailTokenResponse response)? success,
     TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
@@ -133,7 +137,9 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String errorMessage) error,
+    required TResult Function(
+            String errorMessage, Map<String, List<String>>? errors)
+        error,
     required TResult Function(GetEmailTokenResponse response) success,
     required TResult Function(VerifyEmailTokenResponse response)
         verifyEmailToken,
@@ -146,7 +152,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String errorMessage)? error,
+    TResult? Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult? Function(GetEmailTokenResponse response)? success,
     TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) {
@@ -158,7 +165,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String errorMessage)? error,
+    TResult Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult Function(GetEmailTokenResponse response)? success,
     TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
@@ -254,7 +262,9 @@ class _$LoadingImpl implements Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String errorMessage) error,
+    required TResult Function(
+            String errorMessage, Map<String, List<String>>? errors)
+        error,
     required TResult Function(GetEmailTokenResponse response) success,
     required TResult Function(VerifyEmailTokenResponse response)
         verifyEmailToken,
@@ -267,7 +277,8 @@ class _$LoadingImpl implements Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String errorMessage)? error,
+    TResult? Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult? Function(GetEmailTokenResponse response)? success,
     TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) {
@@ -279,7 +290,8 @@ class _$LoadingImpl implements Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String errorMessage)? error,
+    TResult Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult Function(GetEmailTokenResponse response)? success,
     TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
@@ -341,7 +353,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
           _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
       __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String errorMessage});
+  $Res call({String errorMessage, Map<String, List<String>>? errors});
 }
 
 /// @nodoc
@@ -356,12 +368,17 @@ class __$$ErrorImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? errorMessage = null,
+    Object? errors = freezed,
   }) {
     return _then(_$ErrorImpl(
       errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      errors: freezed == errors
+          ? _value._errors
+          : errors // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<String>>?,
     ));
   }
 }
@@ -369,14 +386,25 @@ class __$$ErrorImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ErrorImpl implements Error {
-  const _$ErrorImpl({required this.errorMessage});
+  const _$ErrorImpl(
+      {required this.errorMessage, final Map<String, List<String>>? errors})
+      : _errors = errors;
 
   @override
   final String errorMessage;
+  final Map<String, List<String>>? _errors;
+  @override
+  Map<String, List<String>>? get errors {
+    final value = _errors;
+    if (value == null) return null;
+    if (_errors is EqualUnmodifiableMapView) return _errors;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
 
   @override
   String toString() {
-    return 'GetTokenState.error(errorMessage: $errorMessage)';
+    return 'GetTokenState.error(errorMessage: $errorMessage, errors: $errors)';
   }
 
   @override
@@ -385,11 +413,13 @@ class _$ErrorImpl implements Error {
         (other.runtimeType == runtimeType &&
             other is _$ErrorImpl &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            const DeepCollectionEquality().equals(other._errors, _errors));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, errorMessage);
+  int get hashCode => Object.hash(
+      runtimeType, errorMessage, const DeepCollectionEquality().hash(_errors));
 
   @JsonKey(ignore: true)
   @override
@@ -402,12 +432,14 @@ class _$ErrorImpl implements Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String errorMessage) error,
+    required TResult Function(
+            String errorMessage, Map<String, List<String>>? errors)
+        error,
     required TResult Function(GetEmailTokenResponse response) success,
     required TResult Function(VerifyEmailTokenResponse response)
         verifyEmailToken,
   }) {
-    return error(errorMessage);
+    return error(errorMessage, errors);
   }
 
   @override
@@ -415,11 +447,12 @@ class _$ErrorImpl implements Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String errorMessage)? error,
+    TResult? Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult? Function(GetEmailTokenResponse response)? success,
     TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) {
-    return error?.call(errorMessage);
+    return error?.call(errorMessage, errors);
   }
 
   @override
@@ -427,13 +460,14 @@ class _$ErrorImpl implements Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String errorMessage)? error,
+    TResult Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult Function(GetEmailTokenResponse response)? success,
     TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(errorMessage);
+      return error(errorMessage, errors);
     }
     return orElse();
   }
@@ -480,9 +514,12 @@ class _$ErrorImpl implements Error {
 }
 
 abstract class Error implements GetTokenState {
-  const factory Error({required final String errorMessage}) = _$ErrorImpl;
+  const factory Error(
+      {required final String errorMessage,
+      final Map<String, List<String>>? errors}) = _$ErrorImpl;
 
   String get errorMessage;
+  Map<String, List<String>>? get errors;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -555,7 +592,9 @@ class _$SuccessImpl implements Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String errorMessage) error,
+    required TResult Function(
+            String errorMessage, Map<String, List<String>>? errors)
+        error,
     required TResult Function(GetEmailTokenResponse response) success,
     required TResult Function(VerifyEmailTokenResponse response)
         verifyEmailToken,
@@ -568,7 +607,8 @@ class _$SuccessImpl implements Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String errorMessage)? error,
+    TResult? Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult? Function(GetEmailTokenResponse response)? success,
     TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) {
@@ -580,7 +620,8 @@ class _$SuccessImpl implements Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String errorMessage)? error,
+    TResult Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult Function(GetEmailTokenResponse response)? success,
     TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
@@ -709,7 +750,9 @@ class _$VerifySuccessImpl implements VerifySuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(String errorMessage) error,
+    required TResult Function(
+            String errorMessage, Map<String, List<String>>? errors)
+        error,
     required TResult Function(GetEmailTokenResponse response) success,
     required TResult Function(VerifyEmailTokenResponse response)
         verifyEmailToken,
@@ -722,7 +765,8 @@ class _$VerifySuccessImpl implements VerifySuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(String errorMessage)? error,
+    TResult? Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult? Function(GetEmailTokenResponse response)? success,
     TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) {
@@ -734,7 +778,8 @@ class _$VerifySuccessImpl implements VerifySuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(String errorMessage)? error,
+    TResult Function(String errorMessage, Map<String, List<String>>? errors)?
+        error,
     TResult Function(GetEmailTokenResponse response)? success,
     TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),

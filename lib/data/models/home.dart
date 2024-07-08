@@ -4,21 +4,28 @@ class HomeResponse {
   String? message;
   HomeData? data;
 
+  Map<String, List<String>>? errors;
+
   HomeResponse({
     this.status,
     this.message,
-    this.data
+    this.data,
+    this.errors,
   });
 
   factory HomeResponse.fromJson(Map<String, dynamic> json) {
     return HomeResponse(
         status: json['status'] as bool?,
         message: json['message'] as String?,
-        data: HomeData.fromJson(json['data']));
+        data: HomeData.fromJson(json['data']),
+      errors: (json['errors'] as Map<String, dynamic>?)?.map(
+            (key, value) => MapEntry(key, List<String>.from(value)),
+      ),
+    );
   }
 
   Map<String, dynamic> toJson() =>
-      {'status': status, 'message': message, 'data': data?.toJson()};
+      {'status': status, 'message': message, 'data': data?.toJson(), 'errors': errors};
 
 }
 

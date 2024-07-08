@@ -18,7 +18,7 @@ class GetTokenCubit extends Cubit<GetTokenState> {
       emit(GetTokenState.success(response: response));
     } on SmartPayAppException catch (exception, stackTrace) {
       debugPrint("SmartPayAppException: $exception, $stackTrace");
-      emit(GetTokenState.error(errorMessage: exception.errorMessage));
+      emit(GetTokenState.error(errorMessage: exception.errorMessage, errors: exception.errors));
     } catch (error) {
       emit(GetTokenState.error(errorMessage: error.toString()));
     }
@@ -31,7 +31,7 @@ class GetTokenCubit extends Cubit<GetTokenState> {
       emit(GetTokenState.verifyEmailToken(response: response));
     } on SmartPayAppException catch (exception, stackTrace) {
       debugPrint("SmartPayAppException: $exception, $stackTrace");
-      emit(GetTokenState.error(errorMessage: exception.errorMessage));
+      emit(GetTokenState.error(errorMessage: exception.errorMessage, errors: exception.errors));
     } catch (error) {
       emit(GetTokenState.error(errorMessage: error.toString()));
     }

@@ -177,8 +177,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ? IconButton(
                     icon: SvgPicture.asset(
                       _obscureText
-                          ? AppImages.icVisibilityOn
-                          : AppImages.icVisibilityOff,
+                          ? AppImages.icVisibilityOff
+                          : AppImages.icVisibilityOn,
                     ),
                     onPressed: () {
                       setState(() {

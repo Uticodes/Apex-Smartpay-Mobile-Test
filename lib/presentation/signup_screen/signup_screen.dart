@@ -1,14 +1,19 @@
 import 'package:apex_smartpay_mobile_test/data/models/country_model.dart';
+import 'package:apex_smartpay_mobile_test/presentation/signup_screen/cubit/signup_cubit.dart';
+import 'package:apex_smartpay_mobile_test/presentation/signup_screen/cubit/signup_state.dart';
 import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../app_theme/app_theme.dart';
+import '../../di/injection.dart';
 import '../../utils/app_images.dart';
 import '../../utils/app_toolbar.dart';
 import '../../utils/constants.dart';
 import '../../utils/custom_app_button.dart';
 import '../../utils/custom_text_field.dart';
+import '../../utils/loader.dart';
 import '../../utils/softkey_focus.dart';
 import '../../utils/validations.dart';
 import '../set_pin_screen/set_pin_screen.dart';
@@ -16,13 +21,16 @@ import 'country_list_widget.dart';
 import 'country_view.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+  const SignUpScreen({super.key, required this.email});
+
+  final String email;
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _cubit = getIt.get<SignUpCubit>();
   final _formKey = GlobalKey<FormState>();
   late Future<List<CountryModel>> countriesFuture;
   List<CountryModel> countries = [];
@@ -49,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String get _country => _countryController.text.trim();
 
   bool enableButton() {
-    final fullName = _fullName.isNotEmpty;
+    final fullName = isValidFullName(_fullName);
     final username = _username.isNotEmpty;
     final password = isValidPassword(_password);
     final country = _country.isNotEmpty;
@@ -67,116 +75,154 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-              child: Column(children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    heightMargin(8),
-                    const AppToolbar(
-                      shouldPopBack: true,
-                    ),
-                    heightMargin(24),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 4.0, right: 4),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          RichText(
-                            text: const TextSpan(
-                              text: "Hey there! tell us a bit \n",
-                              style: TextStyle(
-                                fontFamily: fontFamily,
-                                fontSize: 24,
-                                color: AppTheme.darkColor,
-                                fontWeight: FontWeight.bold,
-                              ),
+      body: BlocConsumer<SignUpCubit, SignUpState>(
+        bloc: _cubit,
+        listener: (context, state) {
+          state.maybeWhen(
+            error: (errorMessage, errors) {
+              handleError(errorMessage, errors: errors);
+            },
+            success: (response) {
+              context.push(SetPinScreen(firstName: firstName,));
+              setState(() {});
+            },
+            orElse: () {},
+          );
+        },
+        builder: (context, state) {
+          return SafeArea(
+              child: state.maybeWhen(
+                  loading: () => const LoadingView(),
+                  orElse: () {
+                    return SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 10),
+                          child: Column(children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextSpan(
-                                  text: "about",
-                                  style: TextStyle(
-                                    fontFamily: fontFamily,
-                                    fontSize: 24,
-                                    color: AppTheme.darkColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                heightMargin(8),
+                                const AppToolbar(
+                                  shouldPopBack: true,
                                 ),
-                                TextSpan(
-                                  text: " yourself",
-                                  style: TextStyle(
-                                    fontFamily: fontFamily,
-                                    fontSize: 24,
-                                    color: AppTheme.darkBlueColor,
-                                    fontWeight: FontWeight.bold,
+                                heightMargin(24),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 4.0, right: 4),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .start,
+                                    children: [
+                                      RichText(
+                                        text: const TextSpan(
+                                          text: "Hey there! tell us a bit \n",
+                                          style: TextStyle(
+                                            fontFamily: fontFamily,
+                                            fontSize: 24,
+                                            color: AppTheme.darkColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: "about",
+                                              style: TextStyle(
+                                                fontFamily: fontFamily,
+                                                fontSize: 24,
+                                                color: AppTheme.darkColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: " yourself",
+                                              style: TextStyle(
+                                                fontFamily: fontFamily,
+                                                fontSize: 24,
+                                                color: AppTheme.darkBlueColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      heightMargin(30),
+                                      CustomTextField(
+                                        controller: _fullNameController,
+                                        hintText: "Full name",
+                                        validator: fullNameTextFieldValidator,
+                                        onChanged: (_) => setState(() {}),
+                                      ),
+                                      heightMargin(16),
+                                      CustomTextField(
+                                        controller: _userNameController,
+                                        hintText: "Username",
+                                        validator: usernameTextFieldValidator,
+                                        onChanged: (_) => setState(() {}),
+                                      ),
+                                      heightMargin(16),
+                                      CountryList(
+                                        onTap: () {
+                                          showCountryListBottomSheet(
+                                              context, countries,
+                                                  (country) {
+                                                selectedCountry = country;
+                                                _selectedOption = country.code;
+                                                _countryController.text =
+                                                    country.name;
+                                                debugPrint(
+                                                    "Get country: ${country
+                                                        .name}");
+                                                setState(() {});
+                                              });
+                                        },
+                                        countryName: selectedCountry?.name ??
+                                            "",
+                                        countryFlag: selectedCountry?.flag ??
+                                            "",
+                                        countryCode: selectedCountry?.code ??
+                                            "",
+                                        selected: _selectedOption
+                                            .toString()
+                                            .isNotEmpty,
+                                        controller: _countryController,
+                                      ),
+                                      heightMargin(16),
+                                      CustomTextField(
+                                        controller: _passwordController,
+                                        hintText: "Password",
+                                        validator: passwordTextFieldValidator,
+                                        textInputAction: TextInputAction.done,
+                                        isPasswordField: true,
+                                        onChanged: (_) => setState(() {}),
+                                      ),
+                                      heightMargin(30),
+                                      AppButton(
+                                        onPressed: () {
+                                          hideKeyboard(context);
+                                          _cubit.registerUser(
+                                              fullName: _fullName,
+                                              userName: _username,
+                                              email: widget.email,
+                                              country: selectedCountry!.code.toString(),
+                                              password: _password);
+                                        },
+                                        title: "Sign Up",
+                                        isEnabled: enableButton(),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          heightMargin(30),
-                          CustomTextField(
-                            controller: _fullNameController,
-                            hintText: "Full name",
-                            validator: fullNameTextFieldValidator,
-                            onChanged: (_) => setState(() {}),
-                          ),
-                          heightMargin(16),
-                          CustomTextField(
-                            controller: _userNameController,
-                            hintText: "Username",
-                            validator: usernameTextFieldValidator,
-                            onChanged: (_) => setState(() {}),
-                          ),
-                          heightMargin(16),
-                          CountryList(
-                            onTap: () {
-                              showCountryListBottomSheet(context, countries,
-                                  (country) {
-                                selectedCountry = country;
-                                _selectedOption = country.code;
-                                _countryController.text = country.name;
-                                debugPrint("Get country: ${country.name}");
-                                setState(() {});
-                              });
-                            },
-                            countryName: selectedCountry?.name ?? "",
-                            countryFlag: selectedCountry?.flag ?? "",
-                            countryCode: selectedCountry?.code ?? "",
-                            selected: _selectedOption.toString().isNotEmpty,
-                            controller: _countryController,
-                          ),
-                          heightMargin(16),
-                          CustomTextField(
-                            controller: _passwordController,
-                            hintText: "Password",
-                            validator: passwordTextFieldValidator,
-                            textInputAction: TextInputAction.done,
-                            isPasswordField: true,
-                            onChanged: (_) => setState(() {}),
-                          ),
-                          heightMargin(30),
-                          AppButton(
-                            onPressed: () {
-                              hideKeyboard(context);
-                              context.push(SetPinScreen(firstName: firstName,));
-                            },
-                            title: "Sign Up",
-                            isEnabled: enableButton(),
-                          ),
-                        ],
+                          ]),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ]),
-            ),
-          ),
-        ),
+                    );
+                  })
+          );
+        },
       ),
     );
   }
@@ -255,7 +301,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 hintText: "Search",
                                 // validator: usernameTextFieldValidator,
                                 prefixIcon:
-                                    SvgPicture.asset(AppImages.searchIcon),
+                                SvgPicture.asset(AppImages.searchIcon),
                                 onChanged: (value) {
                                   filterCountries(value);
                                   setState(() {});
@@ -296,7 +342,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               });
                               countrySelected(country);
                               debugPrint(
-                                  "Clicked country selected: $country| ${country.name}");
+                                  "Clicked country selected: $country| ${country
+                                      .name}");
                               Navigator.of(context).pop(selectedCountry);
                               filteredCountries = [];
                             },
@@ -305,7 +352,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               countryFlag: country.flag,
                               countryCode: country.code,
                               index: selectedCountryIndex == index,
-                              isSelected: _selectedOption.toString().isNotEmpty,
+                              isSelected: _selectedOption
+                                  .toString()
+                                  .isNotEmpty,
                             ),
                           );
                         },

@@ -17,7 +17,7 @@ class AuthRepository {
 
   AuthRepository(this._dioClient, this._secureStorage);
 
-  Future<RegisterUserResponse> register(
+  Future<RegisterUserResponse> registerUser(
       {required String fullName,
       required String userName,
       required String email,
@@ -34,6 +34,10 @@ class AuthRepository {
 
     debugPrint("registration body is: $body");
     final response = await _dioClient.post('/auth/register', body);
+    final responseData = RegisterUserResponse.fromJson(response.data);
+    _secureStorage.write(key: AppKeys.userEmail, value: email);
+    _secureStorage.write(key: AppKeys.userPassword, value: password);
+    _secureStorage.write(key: AppKeys.accessToken, value: responseData.data?.token);
     return RegisterUserResponse.fromJson(response.data);
   }
 
