@@ -13,24 +13,25 @@ class AppToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      width: 40,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppTheme.lightGrey)),
-        child: GestureDetector(
-            onTap: () {
-              shouldPopBack == true ? context.pop() : null;
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: SvgPicture.asset(
-                AppImages.appBackBtn,
-                height: 24,
-                width: 24,
-              ),
-            )),
+    return GestureDetector(
+      onTap: () {
+        shouldPopBack == true ? context.pop() : null;
+      },
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppTheme.lightGrey)),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SvgPicture.asset(
+              AppImages.appBackBtn,
+              height: 24,
+              width: 24,
+            ),
+          ),
+      ),
     );
   }
 }

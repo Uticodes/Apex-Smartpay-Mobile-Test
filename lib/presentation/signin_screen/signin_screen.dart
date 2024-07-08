@@ -1,5 +1,5 @@
 import 'package:apex_smartpay_mobile_test/app_theme/app_theme.dart';
-import 'package:apex_smartpay_mobile_test/presentation/signup_screen/signup_screen.dart';
+import 'package:apex_smartpay_mobile_test/presentation/get_email_token_screen/signup_screen.dart';
 import 'package:apex_smartpay_mobile_test/utils/app_text.dart';
 import 'package:apex_smartpay_mobile_test/utils/constants.dart';
 import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
@@ -58,7 +58,7 @@ class _LoginScreenState extends State<SignInScreen> {
                   ),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                    context.push(const SignUpScreen());
+                    context.push(const GetEmailTokenScreen());
                     },
                 ),
               ],
