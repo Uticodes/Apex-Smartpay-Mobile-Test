@@ -1,4 +1,5 @@
 import 'package:apex_smartpay_mobile_test/app_theme/app_theme.dart';
+import 'package:apex_smartpay_mobile_test/presentation/congratulations_screen/congratulations_screen.dart';
 import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -9,7 +10,9 @@ import '../../utils/constants.dart';
 import '../../utils/custom_app_button.dart';
 
 class SetPinScreen extends StatefulWidget {
-  const SetPinScreen({super.key});
+  const SetPinScreen({super.key, required this.firstName});
+
+  final String firstName;
 
   @override
   State<SetPinScreen> createState() => _SetPinScreenState();
@@ -89,7 +92,7 @@ class _SetPinScreenState extends State<SetPinScreen> {
                   heightMargin(50),
                   AppButton(
                       onPressed: () {
-                        // context.push(destination);
+                        context.push(CongratulationsScreen(firstName: widget.firstName));
                       },
                       title: "Create Pin",
                       isEnabled: _pinController.text.length == 5)

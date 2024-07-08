@@ -37,6 +37,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   String get _fullName => _fullNameController.text.trim();
 
+  String get firstName {
+    final nameParts = _fullName.split(" ");
+    return nameParts.isNotEmpty ? nameParts.first : "";
+  }
+
   String get _username => _userNameController.text.trim();
 
   String get _password => _passwordController.text.trim();
@@ -158,7 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           AppButton(
                             onPressed: () {
                               hideKeyboard(context);
-                              context.push(const SetPinScreen());
+                              context.push(SetPinScreen(firstName: firstName,));
                             },
                             title: "Sign Up",
                             isEnabled: enableButton(),
