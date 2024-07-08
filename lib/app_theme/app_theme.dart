@@ -105,7 +105,7 @@ class AppTheme {
         backgroundColor: WidgetStateProperty.resolveWith<Color?>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.disabled)) {
-              return grey300;
+              return darkColor.withOpacity(0.7);
             }
             return darkColor; // Use the component's default.
           },
