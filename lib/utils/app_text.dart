@@ -1,4 +1,5 @@
 import 'package:apex_smartpay_mobile_test/app_theme/app_theme.dart';
+import 'package:apex_smartpay_mobile_test/utils/constants.dart';
 import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/material.dart';
 
@@ -54,6 +55,7 @@ class TextView extends StatelessWidget {
               fontSize: fontSize,
               fontStyle: fontStyle,
               height: lineHeight,
+              fontFamily: fontFamily,
               decorationStyle: decorationStyle,
               decorationColor: decorationColor,
             ),

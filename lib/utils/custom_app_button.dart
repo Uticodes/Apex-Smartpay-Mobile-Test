@@ -1,6 +1,5 @@
 import 'package:apex_smartpay_mobile_test/app_theme/app_theme.dart';
 import 'package:apex_smartpay_mobile_test/utils/app_text.dart';
-import 'package:apex_smartpay_mobile_test/utils/softkey_focus.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -37,10 +36,7 @@ class AppButton extends StatelessWidget {
               backgroundColor: WidgetStatePropertyAll(bgColor),
               foregroundColor: WidgetStatePropertyAll(textColor),
             ),
-        onPressed: () {
-          !isEnabled ? null : onPressed!();
-          hideKeyboard(context);
-        },
+        onPressed: !isEnabled ? null : onPressed,
         child: child ??
             Center(
                 child: TextView(

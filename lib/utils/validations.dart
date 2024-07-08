@@ -4,6 +4,23 @@ String? emailTextFieldValidator(String? email) {
   return null;
 }
 
+String? usernameTextFieldValidator(String? username) {
+  if (username == null || username.isEmpty) return "Username cannot be empty";
+  return null;
+}
+
+String? fullNameTextFieldValidator(String? fullName) {
+  if (fullName == null || fullName.trim().isEmpty) {
+    return 'Full name is required';
+  }
+  final nameParts = fullName.trim().split(' ');
+  if (nameParts.length < 2) {
+    return 'Please enter your full name';
+  }
+  return null;
+}
+
+
 String? passwordTextFieldValidator(String? password) {
   if (password == null || password.isEmpty) return "password cannot be empty";
   if (!isValidPasswordPattern(password)) return "Your password should have at least one upper case, number and special characters";
