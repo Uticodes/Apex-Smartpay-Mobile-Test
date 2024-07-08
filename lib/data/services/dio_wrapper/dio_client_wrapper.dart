@@ -91,8 +91,9 @@ class DioClientWrapper {
           throw SmartPayAppException("An unknown error occurred");
 
         case DioExceptionType.badResponse:
-          if (e.response == null)
+          if (e.response == null) {
             throw SmartPayAppException("An unknown error occurred");
+          }
           switch (e.response!.statusCode) {
             case 409:
             case 400:

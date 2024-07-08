@@ -24,4 +24,17 @@ class GetTokenCubit extends Cubit<GetTokenState> {
     }
   }
 
+  Future<void> verifyEmailToken(String email, String token) async {
+    emit(const GetTokenState.loading());
+    try {
+      final response = await _authRepository.verifyEmailToken(email, token);
+      emit(GetTokenState.verifyEmailToken(response: response));
+    } on SmartPayAppException catch (exception, stackTrace) {
+      debugPrint("SmartPayAppException: $exception, $stackTrace");
+      emit(GetTokenState.error(errorMessage: exception.errorMessage));
+    } catch (error) {
+      emit(GetTokenState.error(errorMessage: error.toString()));
+    }
+  }
+
 }

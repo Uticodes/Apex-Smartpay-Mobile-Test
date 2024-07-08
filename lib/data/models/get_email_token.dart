@@ -26,6 +26,11 @@ class GetEmailTokenResponse {
     return map;
   }
 
+  @override
+  String toString() {
+    return 'GetEmailTokenResponse{status: $status, message: $message}';
+  }
+
 }
 
 class GetEmailTokenData {
@@ -43,6 +48,11 @@ class GetEmailTokenData {
     var map = <String, dynamic>{};
     map['token'] = token;
     return map;
+  }
+
+  @override
+  String toString() {
+    return 'GetEmailTokenResponse{token: $token}';
   }
 
 }

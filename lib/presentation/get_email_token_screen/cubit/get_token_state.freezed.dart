@@ -22,6 +22,8 @@ mixin _$GetTokenState {
     required TResult Function() loading,
     required TResult Function(String errorMessage) error,
     required TResult Function(GetEmailTokenResponse response) success,
+    required TResult Function(VerifyEmailTokenResponse response)
+        verifyEmailToken,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +32,7 @@ mixin _$GetTokenState {
     TResult? Function()? loading,
     TResult? Function(String errorMessage)? error,
     TResult? Function(GetEmailTokenResponse response)? success,
+    TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +41,7 @@ mixin _$GetTokenState {
     TResult Function()? loading,
     TResult Function(String errorMessage)? error,
     TResult Function(GetEmailTokenResponse response)? success,
+    TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +51,7 @@ mixin _$GetTokenState {
     required TResult Function(Loading value) loading,
     required TResult Function(Error value) error,
     required TResult Function(Success value) success,
+    required TResult Function(VerifySuccess value) verifyEmailToken,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +60,7 @@ mixin _$GetTokenState {
     TResult? Function(Loading value)? loading,
     TResult? Function(Error value)? error,
     TResult? Function(Success value)? success,
+    TResult? Function(VerifySuccess value)? verifyEmailToken,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +69,7 @@ mixin _$GetTokenState {
     TResult Function(Loading value)? loading,
     TResult Function(Error value)? error,
     TResult Function(Success value)? success,
+    TResult Function(VerifySuccess value)? verifyEmailToken,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -128,6 +135,8 @@ class _$InitialImpl implements _Initial {
     required TResult Function() loading,
     required TResult Function(String errorMessage) error,
     required TResult Function(GetEmailTokenResponse response) success,
+    required TResult Function(VerifyEmailTokenResponse response)
+        verifyEmailToken,
   }) {
     return initial();
   }
@@ -139,6 +148,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? loading,
     TResult? Function(String errorMessage)? error,
     TResult? Function(GetEmailTokenResponse response)? success,
+    TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) {
     return initial?.call();
   }
@@ -150,6 +160,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? loading,
     TResult Function(String errorMessage)? error,
     TResult Function(GetEmailTokenResponse response)? success,
+    TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -165,6 +176,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(Loading value) loading,
     required TResult Function(Error value) error,
     required TResult Function(Success value) success,
+    required TResult Function(VerifySuccess value) verifyEmailToken,
   }) {
     return initial(this);
   }
@@ -176,6 +188,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(Loading value)? loading,
     TResult? Function(Error value)? error,
     TResult? Function(Success value)? success,
+    TResult? Function(VerifySuccess value)? verifyEmailToken,
   }) {
     return initial?.call(this);
   }
@@ -187,6 +200,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(Loading value)? loading,
     TResult Function(Error value)? error,
     TResult Function(Success value)? success,
+    TResult Function(VerifySuccess value)? verifyEmailToken,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -242,6 +256,8 @@ class _$LoadingImpl implements Loading {
     required TResult Function() loading,
     required TResult Function(String errorMessage) error,
     required TResult Function(GetEmailTokenResponse response) success,
+    required TResult Function(VerifyEmailTokenResponse response)
+        verifyEmailToken,
   }) {
     return loading();
   }
@@ -253,6 +269,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function()? loading,
     TResult? Function(String errorMessage)? error,
     TResult? Function(GetEmailTokenResponse response)? success,
+    TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) {
     return loading?.call();
   }
@@ -264,6 +281,7 @@ class _$LoadingImpl implements Loading {
     TResult Function()? loading,
     TResult Function(String errorMessage)? error,
     TResult Function(GetEmailTokenResponse response)? success,
+    TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -279,6 +297,7 @@ class _$LoadingImpl implements Loading {
     required TResult Function(Loading value) loading,
     required TResult Function(Error value) error,
     required TResult Function(Success value) success,
+    required TResult Function(VerifySuccess value) verifyEmailToken,
   }) {
     return loading(this);
   }
@@ -290,6 +309,7 @@ class _$LoadingImpl implements Loading {
     TResult? Function(Loading value)? loading,
     TResult? Function(Error value)? error,
     TResult? Function(Success value)? success,
+    TResult? Function(VerifySuccess value)? verifyEmailToken,
   }) {
     return loading?.call(this);
   }
@@ -301,6 +321,7 @@ class _$LoadingImpl implements Loading {
     TResult Function(Loading value)? loading,
     TResult Function(Error value)? error,
     TResult Function(Success value)? success,
+    TResult Function(VerifySuccess value)? verifyEmailToken,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -383,6 +404,8 @@ class _$ErrorImpl implements Error {
     required TResult Function() loading,
     required TResult Function(String errorMessage) error,
     required TResult Function(GetEmailTokenResponse response) success,
+    required TResult Function(VerifyEmailTokenResponse response)
+        verifyEmailToken,
   }) {
     return error(errorMessage);
   }
@@ -394,6 +417,7 @@ class _$ErrorImpl implements Error {
     TResult? Function()? loading,
     TResult? Function(String errorMessage)? error,
     TResult? Function(GetEmailTokenResponse response)? success,
+    TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) {
     return error?.call(errorMessage);
   }
@@ -405,6 +429,7 @@ class _$ErrorImpl implements Error {
     TResult Function()? loading,
     TResult Function(String errorMessage)? error,
     TResult Function(GetEmailTokenResponse response)? success,
+    TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -420,6 +445,7 @@ class _$ErrorImpl implements Error {
     required TResult Function(Loading value) loading,
     required TResult Function(Error value) error,
     required TResult Function(Success value) success,
+    required TResult Function(VerifySuccess value) verifyEmailToken,
   }) {
     return error(this);
   }
@@ -431,6 +457,7 @@ class _$ErrorImpl implements Error {
     TResult? Function(Loading value)? loading,
     TResult? Function(Error value)? error,
     TResult? Function(Success value)? success,
+    TResult? Function(VerifySuccess value)? verifyEmailToken,
   }) {
     return error?.call(this);
   }
@@ -442,6 +469,7 @@ class _$ErrorImpl implements Error {
     TResult Function(Loading value)? loading,
     TResult Function(Error value)? error,
     TResult Function(Success value)? success,
+    TResult Function(VerifySuccess value)? verifyEmailToken,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -529,6 +557,8 @@ class _$SuccessImpl implements Success {
     required TResult Function() loading,
     required TResult Function(String errorMessage) error,
     required TResult Function(GetEmailTokenResponse response) success,
+    required TResult Function(VerifyEmailTokenResponse response)
+        verifyEmailToken,
   }) {
     return success(response);
   }
@@ -540,6 +570,7 @@ class _$SuccessImpl implements Success {
     TResult? Function()? loading,
     TResult? Function(String errorMessage)? error,
     TResult? Function(GetEmailTokenResponse response)? success,
+    TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
   }) {
     return success?.call(response);
   }
@@ -551,6 +582,7 @@ class _$SuccessImpl implements Success {
     TResult Function()? loading,
     TResult Function(String errorMessage)? error,
     TResult Function(GetEmailTokenResponse response)? success,
+    TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -566,6 +598,7 @@ class _$SuccessImpl implements Success {
     required TResult Function(Loading value) loading,
     required TResult Function(Error value) error,
     required TResult Function(Success value) success,
+    required TResult Function(VerifySuccess value) verifyEmailToken,
   }) {
     return success(this);
   }
@@ -577,6 +610,7 @@ class _$SuccessImpl implements Success {
     TResult? Function(Loading value)? loading,
     TResult? Function(Error value)? error,
     TResult? Function(Success value)? success,
+    TResult? Function(VerifySuccess value)? verifyEmailToken,
   }) {
     return success?.call(this);
   }
@@ -588,6 +622,7 @@ class _$SuccessImpl implements Success {
     TResult Function(Loading value)? loading,
     TResult Function(Error value)? error,
     TResult Function(Success value)? success,
+    TResult Function(VerifySuccess value)? verifyEmailToken,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -604,5 +639,159 @@ abstract class Success implements GetTokenState {
   GetEmailTokenResponse get response;
   @JsonKey(ignore: true)
   _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$VerifySuccessImplCopyWith<$Res> {
+  factory _$$VerifySuccessImplCopyWith(
+          _$VerifySuccessImpl value, $Res Function(_$VerifySuccessImpl) then) =
+      __$$VerifySuccessImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({VerifyEmailTokenResponse response});
+}
+
+/// @nodoc
+class __$$VerifySuccessImplCopyWithImpl<$Res>
+    extends _$GetTokenStateCopyWithImpl<$Res, _$VerifySuccessImpl>
+    implements _$$VerifySuccessImplCopyWith<$Res> {
+  __$$VerifySuccessImplCopyWithImpl(
+      _$VerifySuccessImpl _value, $Res Function(_$VerifySuccessImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? response = null,
+  }) {
+    return _then(_$VerifySuccessImpl(
+      response: null == response
+          ? _value.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as VerifyEmailTokenResponse,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$VerifySuccessImpl implements VerifySuccess {
+  const _$VerifySuccessImpl({required this.response});
+
+  @override
+  final VerifyEmailTokenResponse response;
+
+  @override
+  String toString() {
+    return 'GetTokenState.verifyEmailToken(response: $response)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$VerifySuccessImpl &&
+            (identical(other.response, response) ||
+                other.response == response));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, response);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VerifySuccessImplCopyWith<_$VerifySuccessImpl> get copyWith =>
+      __$$VerifySuccessImplCopyWithImpl<_$VerifySuccessImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(String errorMessage) error,
+    required TResult Function(GetEmailTokenResponse response) success,
+    required TResult Function(VerifyEmailTokenResponse response)
+        verifyEmailToken,
+  }) {
+    return verifyEmailToken(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(String errorMessage)? error,
+    TResult? Function(GetEmailTokenResponse response)? success,
+    TResult? Function(VerifyEmailTokenResponse response)? verifyEmailToken,
+  }) {
+    return verifyEmailToken?.call(response);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(String errorMessage)? error,
+    TResult Function(GetEmailTokenResponse response)? success,
+    TResult Function(VerifyEmailTokenResponse response)? verifyEmailToken,
+    required TResult orElse(),
+  }) {
+    if (verifyEmailToken != null) {
+      return verifyEmailToken(response);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(Loading value) loading,
+    required TResult Function(Error value) error,
+    required TResult Function(Success value) success,
+    required TResult Function(VerifySuccess value) verifyEmailToken,
+  }) {
+    return verifyEmailToken(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(Loading value)? loading,
+    TResult? Function(Error value)? error,
+    TResult? Function(Success value)? success,
+    TResult? Function(VerifySuccess value)? verifyEmailToken,
+  }) {
+    return verifyEmailToken?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(Loading value)? loading,
+    TResult Function(Error value)? error,
+    TResult Function(Success value)? success,
+    TResult Function(VerifySuccess value)? verifyEmailToken,
+    required TResult orElse(),
+  }) {
+    if (verifyEmailToken != null) {
+      return verifyEmailToken(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class VerifySuccess implements GetTokenState {
+  const factory VerifySuccess(
+      {required final VerifyEmailTokenResponse response}) = _$VerifySuccessImpl;
+
+  VerifyEmailTokenResponse get response;
+  @JsonKey(ignore: true)
+  _$$VerifySuccessImplCopyWith<_$VerifySuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
