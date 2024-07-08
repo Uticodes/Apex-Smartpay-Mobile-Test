@@ -3,6 +3,8 @@ import 'package:apex_smartpay_mobile_test/presentation/signin_screen/signin_scre
 import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/cache/shared_preference_service.dart';
+import '../../di/injection.dart';
 import '../../utils/app_text.dart';
 import '../../utils/custom_app_button.dart';
 import 'components/onboarding_indicator.dart';
@@ -18,6 +20,7 @@ class OnboardingScreen2 extends StatefulWidget {
 }
 
 class _OnboardingScreen2State extends State<OnboardingScreen2> {
+  final _sharedPref = getIt.get<SharedPreferencesService>();
   List<SliderModel> slides = [];
   int currentIndex = 0;
   PageController? _controller;
@@ -55,6 +58,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                           duration: const Duration(milliseconds: 200),
                           curve: Curves.bounceIn);
                     } else {
+                      _sharedPref.setHasOnboarded();
                       context.pushReplace(const SignInScreen());
                     }
                   },
@@ -107,6 +111,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
               child: AppButton(
                 isEnabled: true,
                 onPressed: () {
+                  _sharedPref.setHasOnboarded();
                   context.pushReplace(const SignInScreen());
                 },
                 title: 'Get Started',

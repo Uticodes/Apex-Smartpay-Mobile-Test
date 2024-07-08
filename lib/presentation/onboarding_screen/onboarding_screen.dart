@@ -2,6 +2,8 @@ import 'package:apex_smartpay_mobile_test/app_theme/app_theme.dart';
 import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/material.dart';
 
+import '../../data/cache/shared_preference_service.dart';
+import '../../di/injection.dart';
 import '../../utils/app_text.dart';
 import '../../utils/custom_app_button.dart';
 import '../signin_screen/signin_screen.dart';
@@ -16,6 +18,7 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  final _sharedPref = getIt.get<SharedPreferencesService>();
   List<SliderModel> slides = [];
   int currentIndex = 0;
   PageController? _controller;
@@ -53,13 +56,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         onTap: (){
                           context.pushReplace(const SignInScreen());
                         },
-                        child: const Padding(
-                            padding: EdgeInsets.only(top: 16.0, right: 24),
+                        child: Padding(
+                            padding: const EdgeInsets.only(top: 16.0, right: 24),
                             child: TextView(
                                 text: "Skip",
                                 fontSize: 16,
                                 color: AppTheme.skyBlueColor,
-                                align :TextAlign.right
+                                align :TextAlign.right,
+                              onTap: () {
+                                _sharedPref.setHasOnboarded();
+                                context.pushReplace(const SignInScreen());
+                              },
                           ),
                         ),
                       ),
@@ -104,6 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     title: 'Get Started',
                     isEnabled: true,
                     onPressed: () async {
+                      _sharedPref.setHasOnboarded();
                       context.pushReplace(const SignInScreen());
                     },
                   ),

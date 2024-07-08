@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 typedef ProgressCallback = void Function(int count, int total);
 
-@injectable
+@Singleton()
 class DioClientWrapper {
   final FlutterSecureStorage _secureStorage;
 
