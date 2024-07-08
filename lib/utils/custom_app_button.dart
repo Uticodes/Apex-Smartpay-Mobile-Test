@@ -42,7 +42,7 @@ class AppButton extends StatelessWidget {
                 child: TextView(
               text: title!,
               fontWeight: FontWeight.bold,
-              color: isEnabled ? AppTheme.white : AppTheme.darkColor,
+              color: AppTheme.white,
             )),
       ),
     );
