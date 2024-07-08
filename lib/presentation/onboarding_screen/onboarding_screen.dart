@@ -47,7 +47,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Column(
                   children: [
                     Container(
-                      // height: 56,
                       margin: const EdgeInsets.only(top: 50,),
                       width: context.width,
                       child: GestureDetector(
