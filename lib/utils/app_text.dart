@@ -96,7 +96,7 @@ class TextViewBold extends StatelessWidget {
     this.lineHeight,
     this.style,
     this.maxLines,
-    this.fontWeight = FontWeight.w700,
+    this.fontWeight = FontWeight.bold,
     this.decoration,
     this.fontStyle = FontStyle.normal,
     this.decorationStyle,
