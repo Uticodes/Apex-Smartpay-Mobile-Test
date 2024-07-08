@@ -30,6 +30,8 @@ class _VerifyEmailTokenScreenState extends State<VerifyEmailTokenScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _otpController.text = widget.otp;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -63,7 +65,7 @@ class _VerifyEmailTokenScreenState extends State<VerifyEmailTokenScreen> {
                           ),
                           children: [
                             TextSpan(
-                              text: "${widget.email}",
+                              text: widget.email,
                               style: const TextStyle(
                                 fontFamily: fontFamily,
                                 fontSize: 16,

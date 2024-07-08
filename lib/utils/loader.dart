@@ -1,0 +1,21 @@
+import 'package:apex_smartpay_mobile_test/app_theme/app_theme.dart';
+import 'package:flutter/material.dart';
+
+class LoadingView extends StatelessWidget {
+  const LoadingView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: SizedBox(
+        height: 30,
+        width: 30,
+        child: CircularProgressIndicator.adaptive(
+          backgroundColor: AppTheme.darkBlueColor,
+        ),
+      ),
+    );
+  }
+}

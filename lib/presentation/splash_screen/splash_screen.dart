@@ -1,8 +1,12 @@
+import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../data/cache/shared_preference_service.dart';
+import '../../di/injection.dart';
 import '../../utils/app_images.dart';
 import '../onboarding_screen/onboarding_screen.dart';
+import '../signin_screen/signin_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,6 +17,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
+  final sharedPref = getIt.get<SharedPreferencesService>();
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
@@ -33,13 +38,17 @@ class _SplashScreenState extends State<SplashScreen>
     ));
   }
 
-  Future<Object> appLaunch() async {
-    return Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => const OnboardingScreen()));
+  Future<void> appLaunch() async {
+    if (sharedPref.hasOnboarded) {
+      return context.pushReplace(const SignInScreen());
+    } else {
+      return context.pushReplace(const OnboardingScreen());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: Center(
         child: Column(
