@@ -19,6 +19,7 @@ import '../../utils/custom_text_field.dart';
 import '../../utils/flush_bar_util.dart';
 import '../../utils/loader.dart';
 import '../../utils/social_auth_button.dart';
+import '../../utils/softkey_focus.dart';
 import '../../utils/validations.dart';
 
 class GetEmailTokenScreen extends StatefulWidget {
@@ -121,6 +122,7 @@ class _GetEmailTokenScreenState extends State<GetEmailTokenScreen> {
                                 heightMargin(30),
                                 AppButton(
                                   onPressed: () {
+                                    hideKeyboard(context);
                                     _cubit.getEmailToken(_email);
                                   },
                                   title: "Sign Up",

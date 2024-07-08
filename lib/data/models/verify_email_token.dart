@@ -26,6 +26,11 @@ class VerifyEmailTokenResponse {
     return map;
   }
 
+  @override
+  String toString() {
+    return 'VerifyEmailTokenResponse{status: $status, message: $message}';
+  }
+
 }
 
 class VerifyEmailTokenData {
@@ -43,6 +48,11 @@ class VerifyEmailTokenData {
     var map = <String, dynamic>{};
     map['email'] = email;
     return map;
+  }
+
+  @override
+  String toString() {
+    return 'VerifyEmailToken{email: $email}';
   }
 
 }
