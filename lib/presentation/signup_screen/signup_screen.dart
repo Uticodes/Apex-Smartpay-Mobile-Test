@@ -11,6 +11,7 @@ import '../../utils/custom_app_button.dart';
 import '../../utils/custom_text_field.dart';
 import '../../utils/softkey_focus.dart';
 import '../../utils/validations.dart';
+import '../set_pin_screen/set_pin_screen.dart';
 import 'country_list_widget.dart';
 import 'country_view.dart';
 
@@ -35,6 +36,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _countryController = TextEditingController();
 
   String get _fullName => _fullNameController.text.trim();
+
+  String get firstName {
+    final nameParts = _fullName.split(" ");
+    return nameParts.isNotEmpty ? nameParts.first : "";
+  }
 
   String get _username => _userNameController.text.trim();
 
@@ -157,7 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           AppButton(
                             onPressed: () {
                               hideKeyboard(context);
-                              // context.push(VerifyEmailTokenScreen(email: _email, otp: "12345"));
+                              context.push(SetPinScreen(firstName: firstName,));
                             },
                             title: "Sign Up",
                             isEnabled: enableButton(),
