@@ -1,4 +1,5 @@
 import 'package:apex_smartpay_mobile_test/presentation/signin_screen/signin_screen.dart';
+import 'package:apex_smartpay_mobile_test/presentation/verify_email_token_screen/verify_email_token_screen.dart';
 import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -13,14 +14,14 @@ import '../../utils/custom_text_field.dart';
 import '../../utils/social_auth_button.dart';
 import '../../utils/validations.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class GetEmailTokenScreen extends StatefulWidget {
+  const GetEmailTokenScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<GetEmailTokenScreen> createState() => _GetEmailTokenScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _GetEmailTokenScreenState extends State<GetEmailTokenScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailTextController = TextEditingController();
 
@@ -88,7 +89,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           heightMargin(30),
                           AppButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.push(VerifyEmailTokenScreen(email: _email, otp: "12345"));
+                            },
                             title: "Sign Up",
                             isEnabled: isValidEmail(_email),
                           ),
