@@ -18,25 +18,32 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child:
         Padding(
-          padding: const EdgeInsets.only(left: 24.0, right: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 heightMargin(32),
+                const TextViewBold(
+                    text: "Your secret message is in the box \n👇👇",
+                    color: AppTheme.darkBlueColor,
+                    align: TextAlign.center,
+                    fontSize: 16
+                ),
+                heightMargin(8),
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: AppTheme.primaryColor,
+                      color: AppTheme.darkColor,
                     ),
                   ),
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
                     child: TextViewBold(
                         text: "Your Secret",
-                        color: AppTheme.white,
+                        color: AppTheme.darkBlueColor,
                         fontSize: 16
                     ),
                   ),
