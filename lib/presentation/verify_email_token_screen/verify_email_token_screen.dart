@@ -1,4 +1,5 @@
 import 'package:apex_smartpay_mobile_test/app_theme/app_theme.dart';
+import 'package:apex_smartpay_mobile_test/presentation/signup_screen/signup_screen.dart';
 import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -116,7 +117,9 @@ class _VerifyEmailTokenScreenState extends State<VerifyEmailTokenScreen> {
                         textStyle: const TextStyle(fontSize: 20, height: 1.6),
                         enableActiveFill: false,
                         keyboardType: TextInputType.number,
-                        onCompleted: (_) => setState(() {}),
+                        onCompleted: (_) => setState(() {
+                          context.push(const SignUpScreen());
+                        }),
                         onChanged: (_) => setState(() {}),
                         onSubmitted: (_) {
                           hideKeyboard(context);
@@ -170,6 +173,8 @@ class _VerifyEmailTokenScreenState extends State<VerifyEmailTokenScreen> {
                   AppButton(
                       onPressed: () {
                         //TODO verifyEmailToken;
+                        hideKeyboard(context);
+                        context.push(const SignUpScreen());
                       },
                       title: "Confirm",
                       isEnabled: _otpController.text.length == 5 ? true : false),

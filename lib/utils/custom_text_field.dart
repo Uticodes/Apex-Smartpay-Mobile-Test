@@ -104,14 +104,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // if (widget.label != null)
-        //   TextView(
-        //     text: widget.label!,
-        //     style: context.textTheme.titleMedium?.copyWith(
-        //       fontSize: 14.0,
-        //     ),
-        //   ),
-        // const SizedBox(height: 8),
         TextFormField(
           textAlign: widget.textAlign,
           maxLines: widget.maxLines,

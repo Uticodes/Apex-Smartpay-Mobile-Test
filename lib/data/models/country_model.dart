@@ -1,14 +1,258 @@
 
-class CountryModel {
-  final String id;
-  final String countryName;
-  final String countryFlag;
-  final String countryCode;
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
-  const CountryModel({
-    required this.id,
-    required this.countryName,
-    required this.countryFlag,
-    required this.countryCode,
+class CountryModel {
+  final String name;
+  final String flag;
+  final String code;
+  final String dialCode;
+
+  CountryModel({
+    required this.name,
+    required this.flag,
+    required this.code,
+    required this.dialCode,
   });
+
+  factory CountryModel.fromJson(Map<String, dynamic> json) {
+    return CountryModel(
+      name: json['name'] as String,
+      flag: json['flag'] as String,
+      code: json['code'] as String,
+      dialCode: json['dial_code'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'flag': flag,
+      'code': code,
+      'dial_code': dialCode,
+    };
+  }
 }
+
+List<CountryModel> parseCountries(List<dynamic> jsonList) {
+  return jsonList.map((json) => CountryModel.fromJson(json)).toList();
+}
+
+Future<List<CountryModel>> loadCountries() async {
+  final String response =
+  await rootBundle.loadString('assets/json/country_codes.json');
+  final List<dynamic> data = json.decode(response);
+  return data.map((json) => CountryModel.fromJson(json)).toList();
+}
+
+// class CountryModel {
+//   final String countryName;
+//   final String countryFlag;
+//   final String countryCode;
+//   final String dialCode;
+//
+//   const CountryModel({
+//     required this.countryName,
+//     required this.countryFlag,
+//     required this.countryCode,
+//     required this.dialCode,
+//   });
+// }
+//
+// List<CountryModel> countryList = [
+// const CountryModel(countryName: "Afghanistan", countryFlag: "🇦🇫", countryCode: "AF", dialCode: "+93"),
+// const CountryModel(countryName: "Albania", countryFlag: "🇦🇱", countryCode: "AL", dialCode: "+355"),
+// const CountryModel(countryName: "Algeria", countryFlag: "🇩🇿", countryCode: "DZ", dialCode: "+213"),
+// const CountryModel(countryName: "Andorra", countryFlag: "🇦🇩", countryCode: "AD", dialCode: "+376"),
+// const CountryModel(countryName: "Angola", countryFlag: "🇦🇴", countryCode: "AO", dialCode: "+244"),
+// const CountryModel(countryName: "Antigua and Barbuda", countryFlag: "🇦🇬", countryCode: "AG", dialCode: "+1-268"),
+// const CountryModel(countryName: "Argentina", countryFlag: "🇦🇷", countryCode: "AR", dialCode: "+54"),
+// const CountryModel(countryName: "Armenia", countryFlag: "🇦🇲", countryCode: "AM", dialCode: "+374"),
+// const CountryModel(countryName: "Australia", countryFlag: "🇦🇺", countryCode: "AU", dialCode: "+61"),
+// const CountryModel(countryName: "Austria", countryFlag: "🇦🇹", countryCode: "AT", dialCode: "+43"),
+// const CountryModel(countryName: "Azerbaijan", countryFlag: "🇦🇿", countryCode: "AZ", dialCode: "+994"),
+// const CountryModel(countryName: "Bahamas", countryFlag: "🇧🇸", countryCode: "BS", dialCode: "+1-242"),
+// const CountryModel(countryName: "Bahrain", countryFlag: "🇧🇭", countryCode: "BH", dialCode: "+973"),
+// const CountryModel(countryName: "Bangladesh", countryFlag: "🇧🇩", countryCode: "BD", dialCode: "+880"),
+// const CountryModel(countryName: "Barbados", countryFlag: "🇧🇧", countryCode: "BB", dialCode: "+1-246"),
+// const CountryModel(countryName: "Belarus", countryFlag: "🇧🇾", countryCode: "BY", dialCode: "+375"),
+// const CountryModel(countryName: "Belgium", countryFlag: "🇧🇪", countryCode: "BE", dialCode: "+32"),
+// const CountryModel(countryName: "Belize", countryFlag: "🇧🇿", countryCode: "BZ", dialCode: "+501"),
+// const CountryModel(countryName: "Benin", countryFlag: "🇧🇯", countryCode: "BJ", dialCode: "+229"),
+// const CountryModel(countryName: "Bhutan", countryFlag: "🇧🇹", countryCode: "BT", dialCode: "+975"),
+// const CountryModel(countryName: "Bolivia", countryFlag: "🇧🇴", countryCode: "BO", dialCode: "+591"),
+// const CountryModel(countryName: "Bosnia and Herzegovina", countryFlag: "🇧🇦", countryCode: "BA", dialCode: "+387"),
+// const CountryModel(countryName: "Botswana", countryFlag: "🇧🇼", countryCode: "BW", dialCode: "+267"),
+// const CountryModel(countryName: "Brazil", countryFlag: "🇧🇷", countryCode: "BR", dialCode: "+55"),
+// const CountryModel(countryName: "Brunei", countryFlag: "🇧🇳", countryCode: "BN", dialCode: "+673"),
+// const CountryModel(countryName: "Bulgaria", countryFlag: "🇧🇬", countryCode: "BG", dialCode: "+359"),
+// const CountryModel(countryName: "Burkina Faso", countryFlag: "🇧🇫", countryCode: "BF", dialCode: "+226"),
+// const CountryModel(countryName: "Burundi", countryFlag: "🇧🇮", countryCode: "BI", dialCode: "+257"),
+// const CountryModel(countryName: "Cabo Verde", countryFlag: "🇨🇻", countryCode: "CV", dialCode: "+238"),
+// const CountryModel(countryName: "Cambodia", countryFlag: "🇰🇭", countryCode: "KH", dialCode: "+855"),
+// const CountryModel(countryName: "Cameroon", countryFlag: "🇨🇲", countryCode: "CM", dialCode: "+237"),
+// const CountryModel(countryName: "Canada", countryFlag: "🇨🇦", countryCode: "CA", dialCode: "+1"),
+// const CountryModel(countryName: "Central African Republic", countryFlag: "🇨🇫", countryCode: "CF", dialCode: "+236"),
+// const CountryModel(countryName: "Chad", countryFlag: "🇹🇩", countryCode: "TD", dialCode: "+235"),
+// const CountryModel(countryName: "Chile", countryFlag: "🇨🇱", countryCode: "CL", dialCode: "+56"),
+// const CountryModel(countryName: "China", countryFlag: "🇨🇳", countryCode: "CN", dialCode: "+86"),
+// const CountryModel(countryName: "Colombia", countryFlag: "🇨🇴", countryCode: "CO", dialCode: "+57"),
+// const CountryModel(countryName: "Comoros", countryFlag: "🇰🇲", countryCode: "KM", dialCode: "+269"),
+// const CountryModel(countryName: "Congo (Congo-Brazzaville)", countryFlag: "🇨🇬", countryCode: "CG", dialCode: "+242"),
+// const CountryModel(countryName: "Costa Rica", countryFlag: "🇨🇷", countryCode: "CR", dialCode: "+506"),
+// const CountryModel(countryName: "Croatia", countryFlag: "🇭🇷", countryCode: "HR", dialCode: "+385"),
+// const CountryModel(countryName: "Cuba", countryFlag: "🇨🇺", countryCode: "CU", dialCode: "+53"),
+// const CountryModel(countryName: "Cyprus", countryFlag: "🇨🇾", countryCode: "CY", dialCode: "+357"),
+// const CountryModel(countryName: "Czechia (Czech Republic)", countryFlag: "🇨🇿", countryCode: "CZ", dialCode: "+420"),
+// const CountryModel(countryName: "Democratic Republic of the Congo", countryFlag: "🇨🇩", countryCode: "CD", dialCode: "+243"),
+// const CountryModel(countryName: "Denmark", countryFlag: "🇩🇰", countryCode: "DK", dialCode: "+45"),
+// const CountryModel(countryName: "Djibouti", countryFlag: "🇩🇯", countryCode: "DJ", dialCode: "+253"),
+// const CountryModel(countryName: "Dominica", countryFlag: "🇩🇲", countryCode: "DM", dialCode: "+1-767"),
+// const CountryModel(countryName: "Dominican Republic", countryFlag: "🇩🇴", countryCode: "DO", dialCode: "+1-809"),
+// const CountryModel(countryName: "Ecuador", countryFlag: "🇪🇨", countryCode: "EC", dialCode: "+593"),
+// const CountryModel(countryName: "Egypt", countryFlag: "🇪🇬", countryCode: "EG", dialCode: "+20"),
+// const CountryModel(countryName: "El Salvador", countryFlag: "🇸🇻", countryCode: "SV", dialCode: "+503"),
+// const CountryModel(countryName: "Equatorial Guinea", countryFlag: "🇬🇶", countryCode: "GQ", dialCode: "+240"),
+// const CountryModel(countryName: "Eritrea", countryFlag: "🇪🇷", countryCode: "ER", dialCode: "+291"),
+// const CountryModel(countryName: "Estonia", countryFlag: "🇪🇪", countryCode: "EE", dialCode: "+372"),
+// const CountryModel(countryName: "Eswatini", countryFlag: "🇸🇿", countryCode: "SZ", dialCode: "+268"),
+// const CountryModel(countryName: "Ethiopia", countryFlag: "🇪🇹", countryCode: "ET", dialCode: "+251"),
+// const CountryModel(countryName: "Fiji", countryFlag: "🇫🇯", countryCode: "FJ", dialCode: "+679"),
+// const CountryModel(countryName: "Finland", countryFlag: "🇫🇮", countryCode: "FI", dialCode: "+358"),
+// const CountryModel(countryName: "France", countryFlag: "🇫🇷", countryCode: "FR", dialCode: "+33"),
+// const CountryModel(countryName: "Gabon", countryFlag: "🇬🇦", countryCode: "GA", dialCode: "+241"),
+// const CountryModel(countryName: "Gambia", countryFlag: "🇬🇲", countryCode: "GM", dialCode: "+220"),
+// const CountryModel(countryName: "Georgia", countryFlag: "🇬🇪", countryCode: "GE", dialCode: "+995"),
+// const CountryModel(countryName: "Germany", countryFlag: "🇩🇪", countryCode: "DE", dialCode: "+49"),
+// const CountryModel(countryName: "Ghana", countryFlag: "🇬🇭", countryCode: "GH", dialCode: "+233"),
+// const CountryModel(countryName: "Greece", countryFlag: "🇬🇷", countryCode: "GR", dialCode: "+30"),
+// const CountryModel(countryName: "Grenada", countryFlag: "🇬🇩", countryCode: "GD", dialCode: "+1-473"),
+// const CountryModel(countryName: "Guatemala", countryFlag: "🇬🇹", countryCode: "GT", dialCode: "+502"),
+// const CountryModel(countryName: "Guinea", countryFlag: "🇬🇳", countryCode: "GN", dialCode: "+224"),
+// const CountryModel(countryName: "Guinea-Bissau", countryFlag: "🇬🇼", countryCode: "GW", dialCode: "+245"),
+// const CountryModel(countryName: "Guyana", countryFlag: "🇬🇾", countryCode: "GY", dialCode: "+592"),
+// const CountryModel(countryName: "Haiti", countryFlag: "🇭🇹", countryCode: "HT", dialCode: "+509"),
+// const CountryModel(countryName: "Honduras", countryFlag: "🇭🇳", countryCode: "HN", dialCode: "+504"),
+// const CountryModel(countryName: "Hungary", countryFlag: "🇭🇺", countryCode: "HU", dialCode: "+36"),
+// const CountryModel(countryName: "Iceland", countryFlag: "🇮🇸", countryCode: "IS", dialCode: "+354"),
+// const CountryModel(countryName: "India", countryFlag: "🇮🇳", countryCode: "IN", dialCode: "+91"),
+// const CountryModel(countryName: "Indonesia", countryFlag: "🇮🇩", countryCode: "ID", dialCode: "+62"),
+// const CountryModel(countryName: "Iran", countryFlag: "🇮🇷", countryCode: "IR", dialCode: "+98"),
+// const CountryModel(countryName: "Iraq", countryFlag: "🇮🇶", countryCode: "IQ", dialCode: "+964"),
+// const CountryModel(countryName: "Ireland", countryFlag: "🇮🇪", countryCode: "IE", dialCode: "+353"),
+// const CountryModel(countryName: "Israel", countryFlag: "🇮🇱", countryCode: "IL", dialCode: "+972"),
+// const CountryModel(countryName: "Italy", countryFlag: "🇮🇹", countryCode: "IT", dialCode: "+39"),
+// const CountryModel(countryName: "Jamaica", countryFlag: "🇯🇲", countryCode: "JM", dialCode: "+1-876"),
+// const CountryModel(countryName: "Japan", countryFlag: "🇯🇵", countryCode: "JP", dialCode: "+81"),
+// const CountryModel(countryName: "Jordan", countryFlag: "🇯🇴", countryCode: "JO", dialCode: "+962"),
+// const CountryModel(countryName: "Kazakhstan", countryFlag: "🇰🇿", countryCode: "KZ", dialCode: "+7"),
+// const CountryModel(countryName: "Kenya", countryFlag: "🇰🇪", countryCode: "KE", dialCode: "+254"),
+// const CountryModel(countryName: "Kiribati", countryFlag: "🇰🇮", countryCode: "KI", dialCode: "+686"),
+// const CountryModel(countryName: "Kuwait", countryFlag: "🇰🇼", countryCode: "KW", dialCode: "+965"),
+// const CountryModel(countryName: "Kyrgyzstan", countryFlag: "🇰🇬", countryCode: "KG", dialCode: "+996"),
+// const CountryModel(countryName: "Laos", countryFlag: "🇱🇦", countryCode: "LA", dialCode: "+856"),
+// const CountryModel(countryName: "Latvia", countryFlag: "🇱🇻", countryCode: "LV", dialCode: "+371"),
+// const CountryModel(countryName: "Lebanon", countryFlag: "🇱🇧", countryCode: "LB", dialCode: "+961"),
+// const CountryModel(countryName: "Lesotho", countryFlag: "🇱🇸", countryCode: "LS", dialCode: "+266"),
+// const CountryModel(countryName: "Liberia", countryFlag: "🇱🇷", countryCode: "LR", dialCode: "+231"),
+// const CountryModel(countryName: "Libya", countryFlag: "🇱🇾", countryCode: "LY", dialCode: "+218"),
+// const CountryModel(countryName: "Liechtenstein", countryFlag: "🇱🇮", countryCode: "LI", dialCode: "+423"),
+// const CountryModel(countryName: "Lithuania", countryFlag: "🇱🇹", countryCode: "LT", dialCode: "+370"),
+// const CountryModel(countryName: "Luxembourg", countryFlag: "🇱🇺", countryCode: "LU", dialCode: "+352"),
+// const CountryModel(countryName: "Madagascar", countryFlag: "🇲🇬", countryCode: "MG", dialCode: "+261"),
+// const CountryModel(countryName: "Malawi", countryFlag: "🇲🇼", countryCode: "MW", dialCode: "+265"),
+// const CountryModel(countryName: "Malaysia", countryFlag: "🇲🇾", countryCode: "MY", dialCode: "+60"),
+// const CountryModel(countryName: "Maldives", countryFlag: "🇲🇻", countryCode: "MV", dialCode: "+960"),
+// const CountryModel(countryName: "Mali", countryFlag: "🇲🇱", countryCode: "ML", dialCode: "+223"),
+// const CountryModel(countryName: "Malta", countryFlag: "🇲🇹", countryCode: "MT", dialCode: "+356"),
+// const CountryModel(countryName: "Marshall Islands", countryFlag: "🇲🇭", countryCode: "MH", dialCode: "+692"),
+// const CountryModel(countryName: "Mauritania", countryFlag: "🇲🇷", countryCode: "MR", dialCode: "+222"),
+// const CountryModel(countryName: "Mauritius", countryFlag: "🇲🇺", countryCode: "MU", dialCode: "+230"),
+// const CountryModel(countryName: "Mexico", countryFlag: "🇲🇽", countryCode: "MX", dialCode: "+52"),
+// const CountryModel(countryName: "Micronesia", countryFlag: "🇫🇲", countryCode: "FM", dialCode: "+691"),
+// const CountryModel(countryName: "Moldova", countryFlag: "🇲🇩", countryCode: "MD", dialCode: "+373"),
+// const CountryModel(countryName: "Monaco", countryFlag: "🇲🇨", countryCode: "MC", dialCode: "+377"),
+// const CountryModel(countryName: "Mongolia", countryFlag: "🇲🇳", countryCode: "MN", dialCode: "+976"),
+// const CountryModel(countryName: "Montenegro", countryFlag: "🇲🇪", countryCode: "ME", dialCode: "+382"),
+// const CountryModel(countryName: "Morocco", countryFlag: "🇲🇦", countryCode: "MA", dialCode: "+212"),
+// const CountryModel(countryName: "Mozambique", countryFlag: "🇲🇿", countryCode: "MZ", dialCode: "+258"),
+// const CountryModel(countryName: "Myanmar (formerly Burma)", countryFlag: "🇲🇲", countryCode: "MM", dialCode: "+95"),
+// const CountryModel(countryName: "Namibia", countryFlag: "🇳🇦", countryCode: "NA", dialCode: "+264"),
+// const CountryModel(countryName: "Nauru", countryFlag: "🇳🇷", countryCode: "NR", dialCode: "+674"),
+// const CountryModel(countryName: "Nepal", countryFlag: "🇳🇵", countryCode: "NP", dialCode: "+977"),
+// const CountryModel(countryName: "Netherlands", countryFlag: "🇳🇱", countryCode: "NL", dialCode: "+31"),
+// const CountryModel(countryName: "New Zealand", countryFlag: "🇳🇿", countryCode: "NZ", dialCode: "+64"),
+// const CountryModel(countryName: "Nicaragua", countryFlag: "🇳🇮", countryCode: "NI", dialCode: "+505"),
+// const CountryModel(countryName: "Niger", countryFlag: "🇳🇪", countryCode: "NE", dialCode: "+227"),
+// const CountryModel(countryName: "Nigeria", countryFlag: "🇳🇬", countryCode: "NG", dialCode: "+234"),
+// const CountryModel(countryName: "North Korea", countryFlag: "🇰🇵", countryCode: "KP", dialCode: "+850"),
+// const CountryModel(countryName: "North Macedonia", countryFlag: "🇲🇰", countryCode: "MK", dialCode: "+389"),
+// const CountryModel(countryName: "Norway", countryFlag: "🇳🇴", countryCode: "NO", dialCode: "+47"),
+// const CountryModel(countryName: "Oman", countryFlag: "🇴🇲", countryCode: "OM", dialCode: "+968"),
+// const CountryModel(countryName: "Pakistan", countryFlag: "🇵🇰", countryCode: "PK", dialCode: "+92"),
+// const CountryModel(countryName: "Palau", countryFlag: "🇵🇼", countryCode: "PW", dialCode: "+680"),
+// const CountryModel(countryName: "Palestine", countryFlag: "🇵🇸", countryCode: "PS", dialCode: "+970"),
+// const CountryModel(countryName: "Panama", countryFlag: "🇵🇦", countryCode: "PA", dialCode: "+507"),
+// const CountryModel(countryName: "Papua New Guinea", countryFlag: "🇵🇬", countryCode: "PG", dialCode: "+675"),
+// const CountryModel(countryName: "Paraguay", countryFlag: "🇵🇾", countryCode: "PY", dialCode: "+595"),
+// const CountryModel(countryName: "Peru", countryFlag: "🇵🇪", countryCode: "PE", dialCode: "+51"),
+// const CountryModel(countryName: "Philippines", countryFlag: "🇵🇭", countryCode: "PH", dialCode: "+63"),
+// const CountryModel(countryName: "Poland", countryFlag: "🇵🇱", countryCode: "PL", dialCode: "+48"),
+// const CountryModel(countryName: "Portugal", countryFlag: "🇵🇹", countryCode: "PT", dialCode: "+351"),
+// const CountryModel(countryName: "Qatar", countryFlag: "🇶🇦", countryCode: "QA", dialCode: "+974"),
+// const CountryModel(countryName: "Romania", countryFlag: "🇷🇴", countryCode: "RO", dialCode: "+40"),
+// const CountryModel(countryName: "Russia", countryFlag: "🇷🇺", countryCode: "RU", dialCode: "+7"),
+// const CountryModel(countryName: "Rwanda", countryFlag: "🇷🇼", countryCode: "RW", dialCode: "+250"),
+// const CountryModel(countryName: "Saint Kitts and Nevis", countryFlag: "🇰🇳", countryCode: "KN", dialCode: "+1-869"),
+// const CountryModel(countryName: "Saint Lucia", countryFlag: "🇱🇨", countryCode: "LC", dialCode: "+1-758"),
+// const CountryModel(countryName: "Saint Vincent and the Grenadines", countryFlag: "🇻🇨", countryCode: "VC", dialCode: "+1-784"),
+// const CountryModel(countryName: "Samoa", countryFlag: "🇼🇸", countryCode: "WS", dialCode: "+685"),
+// const CountryModel(countryName: "San Marino", countryFlag: "🇸🇲", countryCode: "SM", dialCode: "+378"),
+// const CountryModel(countryName: "Sao Tome and Principe", countryFlag: "🇸🇹", countryCode: "ST", dialCode: "+239"),
+// const CountryModel(countryName: "Saudi Arabia", countryFlag: "🇸🇦", countryCode: "SA", dialCode: "+966"),
+// const CountryModel(countryName: "Senegal", countryFlag: "🇸🇳", countryCode: "SN", dialCode: "+221"),
+// const CountryModel(countryName: "Serbia", countryFlag: "🇷🇸", countryCode: "RS", dialCode: "+381"),
+// const CountryModel(countryName: "Seychelles", countryFlag: "🇸🇨", countryCode: "SC", dialCode: "+248"),
+// const CountryModel(countryName: "Sierra Leone", countryFlag: "🇸🇱", countryCode: "SL", dialCode: "+232"),
+// const CountryModel(countryName: "Singapore", countryFlag: "🇸🇬", countryCode: "SG", dialCode: "+65"),
+// const CountryModel(countryName: "Slovakia", countryFlag: "🇸🇰", countryCode: "SK", dialCode: "+421"),
+// const CountryModel(countryName: "Slovenia", countryFlag: "🇸🇮", countryCode: "SI", dialCode: "+386"),
+// const CountryModel(countryName: "Solomon Islands", countryFlag: "🇸🇧", countryCode: "SB", dialCode: "+677"),
+// const CountryModel(countryName: "Somalia", countryFlag: "🇸🇴", countryCode: "SO", dialCode: "+252"),
+// const CountryModel(countryName: "South Africa", countryFlag: "🇿🇦", countryCode: "ZA", dialCode: "+27"),
+// const CountryModel(countryName: "South Korea", countryFlag: "🇰🇷", countryCode: "KR", dialCode: "+82"),
+// const CountryModel(countryName: "South Sudan", countryFlag: "🇸🇸", countryCode: "SS", dialCode: "+211"),
+// const CountryModel(countryName: "Spain", countryFlag: "🇪🇸", countryCode: "ES", dialCode: "+34"),
+// const CountryModel(countryName: "Sri Lanka", countryFlag: "🇱🇰", countryCode: "LK", dialCode: "+94"),
+// const CountryModel(countryName: "Sudan", countryFlag: "🇸🇩", countryCode: "SD", dialCode: "+249"),
+// const CountryModel(countryName: "Suriname", countryFlag: "🇸🇷", countryCode: "SR", dialCode: "+597"),
+// const CountryModel(countryName: "Sweden", countryFlag: "🇸🇪", countryCode: "SE", dialCode: "+46"),
+// const CountryModel(countryName: "Switzerland", countryFlag: "🇨🇭", countryCode: "CH", dialCode: "+41"),
+// const CountryModel(countryName: "Syria", countryFlag: "🇸🇾", countryCode: "SY", dialCode: "+963"),
+// const CountryModel(countryName: "Taiwan", countryFlag: "🇹🇼", countryCode: "TW", dialCode: "+886"),
+// const CountryModel(countryName: "Tajikistan", countryFlag: "🇹🇯", countryCode: "TJ", dialCode: "+992"),
+// const CountryModel(countryName: "Tanzania", countryFlag: "🇹🇿", countryCode: "TZ", dialCode: "+255"),
+// const CountryModel(countryName: "Thailand", countryFlag: "🇹🇭", countryCode: "TH", dialCode: "+66"),
+// const CountryModel(countryName: "Timor-Leste", countryFlag: "🇹🇱", countryCode: "TL", dialCode: "+670"),
+// const CountryModel(countryName: "Togo", countryFlag: "🇹🇬", countryCode: "TG", dialCode: "+228"),
+// const CountryModel(countryName: "Tonga", countryFlag: "🇹🇴", countryCode: "TO", dialCode: "+676"),
+// const CountryModel(countryName: "Trinidad and Tobago", countryFlag: "🇹🇹", countryCode: "TT", dialCode: "+1-868"),
+// const CountryModel(countryName: "Tunisia", countryFlag: "🇹🇳", countryCode: "TN", dialCode: "+216"),
+// const CountryModel(countryName: "Turkey", countryFlag: "🇹🇷", countryCode: "TR", dialCode: "+90"),
+// const CountryModel(countryName: "Turkmenistan", countryFlag: "🇹🇲", countryCode: "TM", dialCode: "+993"),
+// const CountryModel(countryName: "Tuvalu", countryFlag: "🇹🇻", countryCode: "TV", dialCode: "+688"),
+// const CountryModel(countryName: "Uganda", countryFlag: "🇺🇬", countryCode: "UG", dialCode: "+256"),
+// const CountryModel(countryName: "Ukraine", countryFlag: "🇺🇦", countryCode: "UA", dialCode: "+380"),
+// const CountryModel(countryName: "United Arab Emirates", countryFlag: "🇦🇪", countryCode: "AE", dialCode: "+971"),
+// const CountryModel(countryName: "United Kingdom", countryFlag: "🇬🇧", countryCode: "GB", dialCode: "+44"),
+// const CountryModel(countryName: "United States", countryFlag: "🇺🇸", countryCode: "US", dialCode: "+1"),
+// const CountryModel(countryName: "Uruguay", countryFlag: "🇺🇾", countryCode: "UY", dialCode: "+598"),
+// const CountryModel(countryName: "Uzbekistan", countryFlag: "🇺🇿", countryCode: "UZ", dialCode: "+998"),
+// const CountryModel(countryName: "Vanuatu", countryFlag: "🇻🇺", countryCode: "VU", dialCode: "+678"),
+// const CountryModel(countryName: "Vatican City (Holy See)", countryFlag: "🇻🇦", countryCode: "VA", dialCode: "+379"),
+// const CountryModel(countryName: "Venezuela", countryFlag: "🇻🇪", countryCode: "VE", dialCode: "+58"),
+// const CountryModel(countryName: "Vietnam", countryFlag: "🇻🇳", countryCode: "VN", dialCode: "+84"),
+// const CountryModel(countryName: "Yemen", countryFlag: "🇾🇪", countryCode: "YE", dialCode: "+967"),
+// const CountryModel(countryName: "Zambia", countryFlag: "🇿🇲", countryCode: "ZM", dialCode: "+260"),
+// const CountryModel(countryName: "Zimbabwe", countryFlag: "🇿🇼", countryCode: "ZW", dialCode: "+263"),
+// ];
