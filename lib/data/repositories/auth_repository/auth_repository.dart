@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../cache/shared_preference_service.dart';
 import '../../models/get_email_token.dart';
 import '../../models/home.dart';
 import '../../models/login_user.dart';
@@ -13,9 +14,10 @@ import '../../services/dio_wrapper/dio_client_wrapper.dart';
 @injectable
 class AuthRepository {
   final DioClientWrapper _dioClient;
+  final SharedPreferencesService _sharedPref;
   final FlutterSecureStorage _secureStorage;
 
-  AuthRepository(this._dioClient, this._secureStorage);
+  AuthRepository(this._dioClient, this._secureStorage, this._sharedPref);
 
   Future<RegisterUserResponse> registerUser(
       {required String fullName,
@@ -35,6 +37,7 @@ class AuthRepository {
     debugPrint("registration body is: $body");
     final response = await _dioClient.post('/auth/register', body);
     final responseData = RegisterUserResponse.fromJson(response.data);
+    _sharedPref.saveUserInfo(responseData.data!.user!.user, token: responseData.data?.token);
     _secureStorage.write(key: AppKeys.userEmail, value: email);
     _secureStorage.write(key: AppKeys.userPassword, value: password);
     _secureStorage.write(key: AppKeys.accessToken, value: responseData.data?.token);
@@ -51,6 +54,7 @@ class AuthRepository {
     debugPrint("login body is: $body");
     final response = await _dioClient.post('/auth/login', body);
     final responseData = LoginUserResponse.fromJson(response.data);
+    _sharedPref.saveUserInfo(responseData.data!.user!.user, token: responseData.data?.token);
     _secureStorage.write(key: AppKeys.userEmail, value: email);
     _secureStorage.write(key: AppKeys.userPassword, value: password);
     _secureStorage.write(key: AppKeys.accessToken, value: responseData.data?.token);
