@@ -1,3 +1,4 @@
+import 'package:apex_smartpay_mobile_test/utils/constants.dart';
 import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,7 @@ import '../../di/injection.dart';
 import '../../utils/app_images.dart';
 import '../onboarding_screen/onboarding_screen.dart';
 import '../signin_screen/signin_screen.dart';
+import '../signin_with_pin_screen/signin_with_pin_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,8 +40,28 @@ class _SplashScreenState extends State<SplashScreen>
     ));
   }
 
+  // Future<void> _fetchUserPin() async {
+  //   final userPin = await _sharedPref.getUserPin();
+  //   setState(() {
+  //     _userPin = userPin;
+  //   });
+  // }
+
+  Future<bool> hasSetPin() async {
+    final String? hasSetPin = await secureStorage.read(key: AppKeys.accessToken);
+    return hasSetPin == 'true';
+  }
+
   Future<void> appLaunch() async {
-    if (sharedPref.hasOnboarded) {
+    final String? accessToken = await secureStorage.read(key: AppKeys.accessToken);
+    final bool hasLoggedIn =
+        sharedPref.hasOnboarded && sharedPref.currentUserInfo != null && accessToken != null;
+    debugPrint("currentUserInfo is ${sharedPref.currentUserInfo}");
+    debugPrint("sharedPref.hasOnboarded ${sharedPref.hasOnboarded}");
+    debugPrint("accessToken $accessToken");
+    if (hasLoggedIn) {
+      return context.pushReplace(const SignInWithPinScreen());
+    } else if(sharedPref.hasOnboarded){
       return context.pushReplace(const SignInScreen());
     } else {
       return context.pushReplace(const OnboardingScreen());

@@ -52,6 +52,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i7.AuthRepository>(() => _i7.AuthRepository(
           gh<_i5.DioClientWrapper>(),
           gh<_i3.FlutterSecureStorage>(),
+          gh<_i6.SharedPreferencesService>(),
         ));
     gh.factory<_i8.SignUpCubit>(
         () => _i8.SignUpCubit(gh<_i7.AuthRepository>()));
