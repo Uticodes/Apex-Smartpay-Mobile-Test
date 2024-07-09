@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> appLaunch() async {
     final String? accessToken = await secureStorage.read(key: AppKeys.accessToken);
     final bool hasLoggedIn =
-        sharedPref.hasOnboarded && sharedPref.currentUserInfo != null && accessToken != null;
+        sharedPref.hasOnboarded && sharedPref.hasPin && sharedPref.currentUserInfo != null && accessToken != null;
     debugPrint("currentUserInfo is ${sharedPref.currentUserInfo}");
     debugPrint("sharedPref.hasOnboarded ${sharedPref.hasOnboarded}");
     debugPrint("accessToken $accessToken");

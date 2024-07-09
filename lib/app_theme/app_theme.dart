@@ -1,4 +1,3 @@
-import 'package:apex_smartpay_mobile_test/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,20 +35,16 @@ class AppTheme {
     fontStyle: FontStyle.normal,
   ).copyWith(inherit: true);
 
-  ///This handles Light theme mode of the app
-  ///
-  /// Light mode starts here
-  ///
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    canvasColor: white,
+    canvasColor: Colors.pink,
     brightness: Brightness.light,
     scaffoldBackgroundColor: white,
     appBarTheme: AppBarTheme(
       backgroundColor: white,
       elevation: 0,
       titleTextStyle: const TextStyle(
-        fontFamily: fontFamily,
+        fontFamily: 'SF Pro Display',
         color: textBoldBlack,
         fontSize: 24,
         fontWeight: FontWeight.w600,
@@ -74,21 +69,21 @@ class AppTheme {
     ),
     textTheme: const TextTheme(
       titleLarge: TextStyle(
-          fontFamily: fontFamily,
+          fontFamily: 'SF Pro Display',
           color: textBoldBlack,
           fontSize: 24,
           fontWeight: FontWeight.bold),
       titleMedium: TextStyle(
-          fontFamily: fontFamily,
+          fontFamily: 'SF Pro Display',
           fontSize: 18,
           fontWeight: FontWeight.w500,
           color: textBlack),
       bodyLarge:
-          TextStyle(fontFamily: fontFamily, color: textBlack, fontSize: 16),
+      TextStyle(fontFamily: 'SF Pro Display', color: textBlack, fontSize: 16),
       bodyMedium:
-          TextStyle(fontFamily: fontFamily, color: textBlack, fontSize: 14),
+      TextStyle(fontFamily: 'SF Pro Display', color: textBlack, fontSize: 14),
       labelLarge: TextStyle(
-          fontFamily: fontFamily,
+          fontFamily: 'SF Pro Display',
           color: primaryColor,
           fontWeight: FontWeight.w500),
     ),
@@ -102,25 +97,25 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-          (Set<WidgetState> states) {
-            if (states.contains(WidgetState.disabled)) {
+        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.disabled)) {
               return darkColor.withOpacity(0.7);
             }
             return darkColor; // Use the component's default.
           },
         ),
-        shape: WidgetStateProperty.all(
+        shape: MaterialStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0))),
-        foregroundColor: WidgetStateProperty.resolveWith<Color?>(
-          (Set<WidgetState> states) {
-            if (states.contains(WidgetState.disabled)) {
+        foregroundColor: MaterialStateProperty.resolveWith<Color?>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.disabled)) {
               return grey100;
             }
             return white; // Use the component's default.
           },
         ),
-        textStyle: WidgetStateProperty.all(_buttonTextStyle),
+        textStyle: MaterialStateProperty.all(_buttonTextStyle),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -140,6 +135,15 @@ class AppTheme {
         borderRadius: BorderRadius.circular(8),
       ),
     ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: darkColor,
+      selectionColor: skyBlueColor,
+      selectionHandleColor: skyBlueColor,
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      color: white,
+      textStyle: const TextStyle(color: darkColor),
+    ),
     indicatorColor: darkColor,
     snackBarTheme: SnackBarThemeData(
       backgroundColor: Colors.white,
@@ -151,16 +155,9 @@ class AppTheme {
     ),
   );
 
-  ///
-  ///Light mode ends here
-  ///
-
-  ///This handles Dark theme mode of the app
-  ///
-  ///Dark mode Starts here
-  ///
   static ThemeData darkTheme = ThemeData(
-    canvasColor: darkModeBackground,
+    // canvasColor: darkModeBackground,
+    canvasColor: Colors.purple,
     useMaterial3: true,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: darkModeBackground,
@@ -168,7 +165,7 @@ class AppTheme {
       backgroundColor: darkModeBackground,
       elevation: 0,
       titleTextStyle: const TextStyle(
-        fontFamily: fontFamily,
+        fontFamily: 'SF Pro Display',
         color: white,
         fontSize: 24,
         fontWeight: FontWeight.w600,
@@ -193,21 +190,21 @@ class AppTheme {
     ),
     textTheme: const TextTheme(
       titleLarge: TextStyle(
-          fontFamily: fontFamily,
+          fontFamily: 'SF Pro Display',
           color: textBoldDarkMode,
           fontSize: 24,
           fontWeight: FontWeight.bold),
       titleMedium: TextStyle(
-          fontFamily: fontFamily,
+          fontFamily: 'SF Pro Display',
           fontSize: 18,
           fontWeight: FontWeight.w500,
           color: textNormalDarkMode),
       bodyLarge: TextStyle(
-          fontFamily: fontFamily, color: textNormalDarkMode, fontSize: 16),
+          fontFamily: 'SF Pro Display', color: textNormalDarkMode, fontSize: 16),
       bodyMedium: TextStyle(
-          fontFamily: fontFamily, color: textNormalDarkMode, fontSize: 14),
+          fontFamily: 'SF Pro Display', color: textNormalDarkMode, fontSize: 14),
       labelLarge: TextStyle(
-          fontFamily: fontFamily,
+          fontFamily: 'SF Pro Display',
           color: primaryColor,
           fontWeight: FontWeight.w500),
     ),
@@ -220,35 +217,35 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-          (Set<WidgetState> states) {
-            if (states.contains(WidgetState.disabled)) {
+        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.disabled)) {
               return darkModeButtonDisabledColor;
             }
             return primaryColor; // Use the component's default.
           },
         ),
-        shape: WidgetStateProperty.all(
+        shape: MaterialStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0))),
-        foregroundColor: WidgetStateProperty.resolveWith<Color?>(
-          (Set<WidgetState> states) {
-            if (states.contains(WidgetState.disabled)) {
+        foregroundColor: MaterialStateProperty.resolveWith<Color?>(
+              (Set<MaterialState> states) {
+            if (states.contains(MaterialState.disabled)) {
               return faintBlack;
             }
             return white; // Use the component's default.
           },
         ),
-        textStyle: WidgetStateProperty.all(_buttonTextStyle),
+        textStyle: MaterialStateProperty.all(_buttonTextStyle),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: ButtonStyle(
-        shape: WidgetStateProperty.all(RoundedRectangleBorder(
+        shape: MaterialStateProperty.all(RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
             side: const BorderSide(color: grey100))),
-        side: WidgetStateProperty.all(const BorderSide(color: faintBlack)),
-        foregroundColor: WidgetStateProperty.all(textNormalDarkMode),
-        textStyle: WidgetStateProperty.all(_buttonTextStyle),
+        side: MaterialStateProperty.all(const BorderSide(color: faintBlack)),
+        foregroundColor: MaterialStateProperty.all(textNormalDarkMode),
+        textStyle: MaterialStateProperty.all(_buttonTextStyle),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -266,8 +263,17 @@ class AppTheme {
         borderRadius: BorderRadius.circular(12),
       ),
     ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: white,
+      selectionColor: darkBlueColor,
+      selectionHandleColor: darkBlueColor,
+    ),
+    popupMenuTheme: PopupMenuThemeData(
+      color: darkModeBackground,
+      textStyle: const TextStyle(color: white),
+    ),
     radioTheme: RadioThemeData(
-      fillColor: WidgetStateProperty.all(white),
+      fillColor: MaterialStateProperty.all(white),
       materialTapTargetSize: MaterialTapTargetSize.padded,
     ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
@@ -282,9 +288,9 @@ class AppTheme {
       selectedItemColor: white,
       type: BottomNavigationBarType.fixed,
       selectedLabelStyle: TextStyle(
-          fontFamily: fontFamily, fontWeight: FontWeight.w600, fontSize: 14.0),
+          fontFamily: 'SF Pro Display', fontWeight: FontWeight.w600, fontSize: 14.0),
       unselectedLabelStyle: TextStyle(
-          fontFamily: fontFamily, fontWeight: FontWeight.w600, fontSize: 12.0),
+          fontFamily: 'SF Pro Display', fontWeight: FontWeight.w600, fontSize: 12.0),
     ),
     snackBarTheme: const SnackBarThemeData(
       backgroundColor: primaryColor,
@@ -294,7 +300,4 @@ class AppTheme {
     ),
   );
 
-  ///
-  ///Dark mode ends here
-  ///
 }

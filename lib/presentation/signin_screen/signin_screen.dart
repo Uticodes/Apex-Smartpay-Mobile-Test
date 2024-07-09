@@ -1,6 +1,7 @@
 import 'package:apex_smartpay_mobile_test/app_theme/app_theme.dart';
 import 'package:apex_smartpay_mobile_test/presentation/get_email_token_screen/get_email_token_screen.dart';
 import 'package:apex_smartpay_mobile_test/presentation/home_screen/home_screen.dart';
+import 'package:apex_smartpay_mobile_test/presentation/set_pin_screen/set_pin_screen.dart';
 import 'package:apex_smartpay_mobile_test/presentation/signin_screen/cubit/signin_cubit.dart';
 import 'package:apex_smartpay_mobile_test/presentation/signin_screen/cubit/signin_state.dart';
 import 'package:apex_smartpay_mobile_test/utils/app_text.dart';
@@ -84,7 +85,13 @@ class _LoginScreenState extends State<SignInScreen> {
             success: (response) {
               _sharedPref.setHasSignedIn();
               name = "${response.data?.user?.fullName}";
-              context.pushReplace(HomeScreen(userName: name.toString(),));
+              if(_sharedPref.hasPin) {
+                context.pushReplace(HomeScreen(userName: name.toString(),));
+              } else {
+                final nameParts = name.toString().trim().split(' ').first;
+                context.pushReplace(SetPinScreen(firstName: nameParts,));
+              }
+
               setState(() {});
             },
             orElse: () {},
