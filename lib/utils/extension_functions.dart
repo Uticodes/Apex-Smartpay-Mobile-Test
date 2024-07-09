@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:apex_smartpay_mobile_test/utils/flush_bar_util.dart';
 
 extension BuildContextWrapper on BuildContext {
   double get height {
@@ -74,3 +75,23 @@ Widget widthMargin(double size) {
     width: getScreenWidth(size),
   );
 }
+
+void handleError(String errorMessage, {Map<String, List<String>>? errors}) {
+  FlushBarUtil.error(errorMessage);
+  if (errors != null && errors.isNotEmpty) {
+    for (var entry in errors.entries) {
+      for (var message in entry.value) {
+        final cleanedMessage = _cleanErrorMessage(entry, message);
+        FlushBarUtil.error(cleanedMessage);
+        debugPrint("errorsMessage:: $cleanedMessage");
+      }
+    }
+  }
+  debugPrint("errorMessage:: $errorMessage");
+}
+
+String _cleanErrorMessage(MapEntry<String, List<String>> entry, String message) {
+  final regex = RegExp(r'(\[|\])');
+  return message.replaceAll(regex, '');
+}
+

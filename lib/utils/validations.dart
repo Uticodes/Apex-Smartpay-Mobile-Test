@@ -27,6 +27,15 @@ String? passwordTextFieldValidator(String? password) {
   return null;
 }
 
+bool isValidFullName(String? fullName) {
+  if (fullName == null || fullName.isEmpty) {
+    return false;
+  }
+
+  final nameParts = fullName.trim().split(' ');
+  return nameParts.length >= 2;
+}
+
 bool isValidPassword(String? password) {
   return password != null && password.isNotEmpty && password.length >= 8 && isValidPasswordPattern(password);
 }

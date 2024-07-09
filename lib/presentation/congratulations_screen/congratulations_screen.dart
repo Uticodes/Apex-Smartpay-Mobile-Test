@@ -34,6 +34,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
     ));
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

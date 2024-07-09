@@ -16,7 +16,6 @@ import '../../utils/app_toolbar.dart';
 import '../../utils/constants.dart';
 import '../../utils/custom_app_button.dart';
 import '../../utils/custom_text_field.dart';
-import '../../utils/flush_bar_util.dart';
 import '../../utils/loader.dart';
 import '../../utils/social_auth_button.dart';
 import '../../utils/softkey_focus.dart';
@@ -44,11 +43,9 @@ class _GetEmailTokenScreenState extends State<GetEmailTokenScreen> {
         bloc: _cubit,
         listener: (context, state) {
           state.maybeWhen(
-            error: (errorMessage) {
-              FlushBarUtil.error(errorMessage);
-              debugPrint("errorMessage:: $errorMessage");
+            error: (errorMessage, errors) {
+              handleError(errorMessage, errors: errors);
             },
-            loading: () => const LoadingView(),
             success: (response) {
               debugPrint("Success L message: ${response.message}");
               debugPrint("Success token: ${response.data?.token}");
@@ -62,163 +59,174 @@ class _GetEmailTokenScreenState extends State<GetEmailTokenScreen> {
           return Scaffold(
             resizeToAvoidBottomInset: false,
             body: SafeArea(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 10),
-                    child: Column(children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          heightMargin(8),
-                          const AppToolbar(shouldPopBack: true,),
-                          heightMargin(24),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4.0, right: 4),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                RichText(
-                                  text: const TextSpan(
-                                    text: "Create a ",
-                                    style: TextStyle(
-                                      fontFamily: fontFamily,
-                                      fontSize: 24,
-                                      color: AppTheme.darkColor,
-                                      fontWeight: FontWeight.bold,
+                child: state.maybeWhen(
+                    loading: () => const LoadingView(),
+                    orElse: () {
+                      return SingleChildScrollView(
+                        child: Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 10),
+                            child: Column(children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  heightMargin(8),
+                                  const AppToolbar(
+                                    shouldPopBack: true,
+                                  ),
+                                  heightMargin(24),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 4.0, right: 4),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        RichText(
+                                          text: const TextSpan(
+                                            text: "Create a ",
+                                            style: TextStyle(
+                                              fontFamily: fontFamily,
+                                              fontSize: 24,
+                                              color: AppTheme.darkColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            children: [
+                                              TextSpan(
+                                                text: "Smartpay\n",
+                                                style: TextStyle(
+                                                  fontFamily: fontFamily,
+                                                  fontSize: 24,
+                                                  color: AppTheme.darkBlueColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: "account",
+                                                style: TextStyle(
+                                                  fontFamily: fontFamily,
+                                                  fontSize: 24,
+                                                  color: AppTheme.darkColor,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        heightMargin(30),
+                                        CustomTextField(
+                                          controller: _emailTextController,
+                                          hintText: "Email",
+                                          validator: emailTextFieldValidator,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          onChanged: (_) => setState(() {}),
+                                        ),
+                                        heightMargin(30),
+                                        AppButton(
+                                          onPressed: () {
+                                            hideKeyboard(context);
+                                            _cubit.getEmailToken(_email);
+                                          },
+                                          title: "Sign Up",
+                                          isEnabled: isValidEmail(_email),
+                                        ),
+                                        heightMargin(
+                                          32,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              width: getScreenWidth(142),
+                                              child: Divider(
+                                                color: AppTheme.lightGrey,
+                                                thickness: getScreenHeight(0.5),
+                                              ),
+                                            ),
+                                            const TextView(
+                                              text: 'OR',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppTheme.textBlack,
+                                            ),
+                                            SizedBox(
+                                              width: getScreenWidth(142),
+                                              child: Divider(
+                                                color: AppTheme.lightGrey,
+                                                thickness: getScreenHeight(0.7),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        heightMargin(24),
+                                      ],
                                     ),
+                                  ),
+                                  Row(
                                     children: [
-                                      TextSpan(
-                                        text: "Smartpay\n",
-                                        style: TextStyle(
-                                          fontFamily: fontFamily,
-                                          fontSize: 24,
-                                          color: AppTheme.darkBlueColor,
-                                          fontWeight: FontWeight.bold,
+                                      Expanded(
+                                        child: SocialAuthButtons(
+                                          icon: AppImages.googleLogo,
+                                          onPressed: () {},
                                         ),
                                       ),
-                                      TextSpan(
-                                        text: "account",
-                                        style: TextStyle(
-                                          fontFamily: fontFamily,
-                                          fontSize: 24,
-                                          color: AppTheme.darkColor,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      const SizedBox(
+                                        width: 16,
                                       ),
+                                      Expanded(
+                                        child: SocialAuthButtons(
+                                          icon: AppImages.appleLogo,
+                                          onPressed: () {},
+                                        ),
+                                      )
                                     ],
                                   ),
-                                ),
-                                heightMargin(30),
-                                CustomTextField(
-                                  controller: _emailTextController,
-                                  hintText: "Email",
-                                  validator: emailTextFieldValidator,
-                                  keyboardType: TextInputType.emailAddress,
-                                  onChanged: (_) => setState(() {}),
-                                ),
-                                heightMargin(30),
-                                AppButton(
-                                  onPressed: () {
-                                    hideKeyboard(context);
-                                    _cubit.getEmailToken(_email);
-                                  },
-                                  title: "Sign Up",
-                                  isEnabled: isValidEmail(_email),
-                                ),
-                                heightMargin(32,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: getScreenWidth(142),
-                                      child: Divider(
-                                        color: AppTheme.lightGrey,
-                                        thickness: getScreenHeight(0.5),
+                                  heightMargin(100),
+                                  Padding(
+                                    padding: const EdgeInsets.all(48.0),
+                                    child: SizedBox(
+                                      width: context.width,
+                                      child: RichText(
+                                        textAlign: TextAlign.center,
+                                        text: TextSpan(
+                                          text: "Already have an account? ",
+                                          style: const TextStyle(
+                                            fontFamily: fontFamily,
+                                            fontSize: 16,
+                                            color: AppTheme.textBlack,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: "Sign In",
+                                              style: const TextStyle(
+                                                fontFamily: fontFamily,
+                                                fontSize: 16,
+                                                color: AppTheme.darkBlueColor,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  context.push(
+                                                      const SignInScreen());
+                                                },
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    const TextView(
-                                      text: 'OR',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppTheme.textBlack,
-                                    ),
-                                    SizedBox(
-                                      width: getScreenWidth(142),
-                                      child: Divider(
-                                        color: AppTheme.lightGrey,
-                                        thickness: getScreenHeight(0.7),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                heightMargin(24),
-                              ],
-                            ),
+                                  )
+                                ],
+                              ),
+                            ]),
                           ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: SocialAuthButtons(
-                                  icon: AppImages.googleLogo,
-                                  onPressed: () {},
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 16,
-                              ),
-                              Expanded(
-                                child: SocialAuthButtons(
-                                  icon: AppImages.appleLogo,
-                                  onPressed: () {},
-                                ),
-                              )
-                            ],
-                          ),
-                          heightMargin(100),
-                          Padding(
-                            padding: const EdgeInsets.all(48.0),
-                            child: SizedBox(
-                              width: context.width,
-                              child: RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  text: "Already have an account? ",
-                                  style: const TextStyle(
-                                    fontFamily: fontFamily,
-                                    fontSize: 16,
-                                    color: AppTheme.textBlack,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: "Sign In",
-                                      style: const TextStyle(
-                                        fontFamily: fontFamily,
-                                        fontSize: 16,
-                                        color: AppTheme.darkBlueColor,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          context.push(const SignInScreen());
-                                        },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ]),
-                  ),
-                ),
-              ),
-            ),
+                        ),
+                      );
+                    })),
           );
         },
       ),

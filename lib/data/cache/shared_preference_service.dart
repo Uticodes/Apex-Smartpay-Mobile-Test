@@ -9,10 +9,12 @@ import '../models/smartpay_user.dart';
 @singleton
 class SharedPreferencesService {
   final SharedPreferences _sharedPreferences;
+
   static const _userAccessToken = 'access_token';
   static const _userVerificationToken = 'verification_token';
   static const _userInfo = 'user_info';
   static const _hasOnBoarded = 'has_onboarded';
+  static const _hasPin = 'has_pin';
 
   SharedPreferencesService(this._sharedPreferences);
 
@@ -34,6 +36,10 @@ class SharedPreferencesService {
     return await _sharedPreferences.setBool(_hasOnBoarded, true);
   }
 
+  Future<bool> setHasSetPin() async {
+    return await _sharedPreferences.setBool(_hasPin, true);
+  }
+
   Future<bool> saveUserInfo(SmartPayUser smartPayUser, {String? token}) async {
     if (token != null) smartPayUser = smartPayUser.copyWith(token: token);
     return await _sharedPreferences.setString(_userInfo, jsonEncode(smartPayUser));
@@ -47,6 +53,8 @@ class SharedPreferencesService {
   String get verificationToken => _sharedPreferences.getString(_userVerificationToken) ?? "";
 
   bool get hasOnboarded => _sharedPreferences.getBool(_hasOnBoarded) ?? false;
+
+  bool get hasPin => _sharedPreferences.getBool(_hasPin) ?? false;
 
   SmartPayUser? get currentUserInfo {
     try {

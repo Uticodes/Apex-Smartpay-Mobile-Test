@@ -7,6 +7,7 @@ abstract class AppModule {
   @lazySingleton
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
 
+  @preResolve
   @lazySingleton
   Future<SharedPreferences> get sharedPref => SharedPreferences.getInstance();
 }

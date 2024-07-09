@@ -97,19 +97,31 @@ class DioClientWrapper {
           switch (e.response!.statusCode) {
             case 409:
             case 400:
-              debugPrint("server error is ${e.response!.data}");
-              final errorMap = e.response!.data;
-              String message;
-              if (errorMap["error"] == null) {
-                message = errorMap["message"];
-              } else {
-                message = errorMap["error"];
-              }
-              return throw SmartPayAppException(message);
+            debugPrint("server error is ${e.response!.data}");
+            final errorMap = e.response!.data;
+            String message = errorMap["message"];
+            Map<String, List<String>> errors = {};
+            if (errorMap["errors"] != null) {
+              errorMap["errors"].forEach((key, value) {
+                errors[key] = List<String>.from(value);
+              });
+            }
+              throw SmartPayAppException(message, errors: errors);
             case 401:
-              return throw SmartPayAppException("Authorization error");
+              throw SmartPayAppException("Authorization error");
             case 404:
               throw SmartPayAppException("Resource not found");
+            case 422:
+              debugPrint("server error is ${e.response!.data}");
+              final errorMap = e.response!.data;
+              String message = errorMap["message"];
+              Map<String, List<String>> errors = {};
+              if (errorMap["errors"] != null) {
+                errorMap["errors"].forEach((key, value) {
+                  errors[key] = List<String>.from(value);
+                });
+              }
+              throw SmartPayAppException(message, errors: errors);
             case 500:
               throw SmartPayAppException("Internal server error");
             default:
@@ -128,11 +140,12 @@ class DioClientWrapper {
 
 class SmartPayAppException implements Exception {
   final String errorMessage;
+  final Map<String, List<String>>? errors;
 
-  SmartPayAppException(this.errorMessage);
+  SmartPayAppException(this.errorMessage, {this.errors});
 
   @override
   String toString() {
-    return 'AppException{errorMessage: $errorMessage}';
+    return 'SmartPayAppException{errorMessage: $errorMessage, errors: $errors}';
   }
 }

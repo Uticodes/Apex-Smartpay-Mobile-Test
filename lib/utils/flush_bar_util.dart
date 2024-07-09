@@ -46,7 +46,7 @@ class FlushBarUtil {
   }
 
   /// show error notification
-  static error(String message, {Duration duration = const Duration(seconds: 2)}) {
+  static error(String message, {Duration duration = const Duration(seconds: 4)}) {
     // show a notification at top of screen.
 
     showSimpleNotification(
