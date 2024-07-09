@@ -91,16 +91,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           }
                       ),
                     ),
-                    const SizedBox(height: 24,),
+                    heightMargin(24),
                     // Container created for dots
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(slides.length, (index) => buildIndicator(currentIndex,index),
                       ),
                     ),
+
                   ],
                 ),
               ),
+              heightMargin(12),
               Align(
                 alignment: Alignment.bottomCenter,
                 child:  Container(
