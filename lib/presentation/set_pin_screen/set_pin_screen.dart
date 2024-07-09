@@ -4,6 +4,8 @@ import 'package:apex_smartpay_mobile_test/utils/extension_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+import '../../data/cache/shared_preference_service.dart';
+import '../../di/injection.dart';
 import '../../utils/app_text.dart';
 import '../../utils/app_toolbar.dart';
 import '../../utils/constants.dart';
@@ -19,6 +21,7 @@ class SetPinScreen extends StatefulWidget {
 }
 
 class _SetPinScreenState extends State<SetPinScreen> {
+  final _sharedPref = getIt.get<SharedPreferencesService>();
   final _pinController = TextEditingController();
 
   @override
@@ -92,7 +95,11 @@ class _SetPinScreenState extends State<SetPinScreen> {
                   heightMargin(50),
                   AppButton(
                       onPressed: () {
-                        context.push(CongratulationsScreen(firstName: widget.firstName));
+                        secureStorage.write(key: AppKeys.userPin, value: _pinController.text).then((_){
+                          _sharedPref.setHasSetPin();
+                          context.push(CongratulationsScreen(firstName: widget.firstName));
+                        });
+
                       },
                       title: "Create Pin",
                       isEnabled: _pinController.text.length == 5)
