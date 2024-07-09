@@ -72,7 +72,7 @@ class _CongratulationsScreenState extends State<CongratulationsScreen>
                   heightMargin(32),
                   AppButton(
                       onPressed: () {
-                        context.push(const HomeScreen());
+                        context.push(HomeScreen(userName: widget.firstName,));
                       },
                       title: "Get Started",
                       isEnabled: true

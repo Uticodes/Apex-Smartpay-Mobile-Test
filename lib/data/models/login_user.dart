@@ -1,3 +1,5 @@
+import 'package:apex_smartpay_mobile_test/data/models/smartpay_user.dart';
+
 class LoginUserResponse {
   bool? status;
   String? message;
@@ -78,6 +80,20 @@ class LoginUserData {
       phoneCountry: json['phone_country'] as String?,
       country: json['country'] as String?,
       avatar: json['avatar'] as String?,
+    );
+  }
+
+  SmartPayUser get user {
+    return SmartPayUser(
+      id: id.toString(),
+      fullName: fullName.toString(),
+      userName: userName.toString(),
+      email: email.toString(),
+      phoneNumber: phone.toString(),
+      phoneCountry: phoneCountry.toString(),
+      country: country.toString(),
+      avatar: avatar,
+
     );
   }
 

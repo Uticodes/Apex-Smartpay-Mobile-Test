@@ -38,7 +38,7 @@ class AuthRepository {
     _secureStorage.write(key: AppKeys.userEmail, value: email);
     _secureStorage.write(key: AppKeys.userPassword, value: password);
     _secureStorage.write(key: AppKeys.accessToken, value: responseData.data?.token);
-    return RegisterUserResponse.fromJson(response.data);
+    return responseData;
   }
 
   Future<LoginUserResponse> login(String email, String password) async {
@@ -50,7 +50,11 @@ class AuthRepository {
 
     debugPrint("login body is: $body");
     final response = await _dioClient.post('/auth/login', body);
-    return LoginUserResponse.fromJson(response.data);
+    final responseData = LoginUserResponse.fromJson(response.data);
+    _secureStorage.write(key: AppKeys.userEmail, value: email);
+    _secureStorage.write(key: AppKeys.userPassword, value: password);
+    _secureStorage.write(key: AppKeys.accessToken, value: responseData.data?.token);
+    return responseData;
   }
 
   Future<GetEmailTokenResponse> getEmailToken(String email) async {
