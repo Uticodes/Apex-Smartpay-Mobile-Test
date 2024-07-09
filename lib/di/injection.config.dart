@@ -14,9 +14,13 @@ import 'package:apex_smartpay_mobile_test/data/repositories/auth_repository/auth
     as _i7;
 import 'package:apex_smartpay_mobile_test/data/services/dio_wrapper/dio_client_wrapper.dart'
     as _i5;
-import 'package:apex_smartpay_mobile_test/di/app_module.dart' as _i10;
+import 'package:apex_smartpay_mobile_test/di/app_module.dart' as _i12;
 import 'package:apex_smartpay_mobile_test/presentation/get_email_token_screen/cubit/get_token_cubit.dart'
     as _i9;
+import 'package:apex_smartpay_mobile_test/presentation/home_screen/cubit/home_cubit.dart'
+    as _i10;
+import 'package:apex_smartpay_mobile_test/presentation/signin_screen/cubit/signin_cubit.dart'
+    as _i11;
 import 'package:apex_smartpay_mobile_test/presentation/signup_screen/cubit/signup_cubit.dart'
     as _i8;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i3;
@@ -53,8 +57,11 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i8.SignUpCubit(gh<_i7.AuthRepository>()));
     gh.factory<_i9.GetTokenCubit>(
         () => _i9.GetTokenCubit(gh<_i7.AuthRepository>()));
+    gh.factory<_i10.HomeCubit>(() => _i10.HomeCubit(gh<_i7.AuthRepository>()));
+    gh.factory<_i11.SignInCubit>(
+        () => _i11.SignInCubit(gh<_i7.AuthRepository>()));
     return this;
   }
 }
 
-class _$AppModule extends _i10.AppModule {}
+class _$AppModule extends _i12.AppModule {}

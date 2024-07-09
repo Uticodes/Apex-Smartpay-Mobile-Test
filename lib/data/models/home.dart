@@ -3,7 +3,6 @@ class HomeResponse {
   bool? status;
   String? message;
   HomeData? data;
-
   Map<String, List<String>>? errors;
 
   HomeResponse({

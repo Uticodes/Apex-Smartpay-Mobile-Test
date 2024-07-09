@@ -15,6 +15,7 @@ class SharedPreferencesService {
   static const _userInfo = 'user_info';
   static const _hasOnBoarded = 'has_onboarded';
   static const _hasPin = 'has_pin';
+  static const _hasSignedIn = 'has_sign_in';
 
   SharedPreferencesService(this._sharedPreferences);
 
@@ -36,6 +37,10 @@ class SharedPreferencesService {
     return await _sharedPreferences.setBool(_hasOnBoarded, true);
   }
 
+  Future<bool> setHasSignedIn() async {
+    return await _sharedPreferences.setBool(_hasSignedIn, true);
+  }
+
   Future<bool> setHasSetPin() async {
     return await _sharedPreferences.setBool(_hasPin, true);
   }
@@ -55,6 +60,8 @@ class SharedPreferencesService {
   bool get hasOnboarded => _sharedPreferences.getBool(_hasOnBoarded) ?? false;
 
   bool get hasPin => _sharedPreferences.getBool(_hasPin) ?? false;
+
+  bool get hasSignedIn => _sharedPreferences.getBool(_hasSignedIn) ?? false;
 
   SmartPayUser? get currentUserInfo {
     try {
