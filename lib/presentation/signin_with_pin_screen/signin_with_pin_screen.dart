@@ -174,7 +174,8 @@ class _SignInWithPinScreenState extends State<SignInWithPinScreen> {
                                     verifyPin();
                                   },
                                   title: "Create Pin",
-                                  isEnabled: _pinController.text.length == 5)
+                                  isEnabled: _pinController.text.length == 5),
+
                             ],
                           ),
                         ),

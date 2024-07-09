@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../di/injection.dart';
 import '../../utils/app_text.dart';
+import '../../utils/flush_bar_util.dart';
 import '../../utils/loader.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _cubit = getIt.get<HomeCubit>();
   String? secret;
+  String? errorMessage;
   bool showSecret = false;
 
   @override
@@ -28,12 +30,42 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         body: BlocConsumer<HomeCubit, HomeState>(
       bloc: _cubit,
-      listener: (context, state) {},
+      listener: (context, state) {
+        state.maybeWhen(
+            orElse: () {},
+          error: (errorMessage, errors) {
+            if (errors != null && errors.isNotEmpty) {
+              for (var entry in errors.entries) {
+                for (var message in entry.value) {
+                  final cleanedMessage = cleanErrorMessage(entry, message);
+                  errorMessage = cleanedMessage;
+                  FlushBarUtil.error(cleanedMessage);
+                  debugPrint("errorsMessage:: $cleanedMessage");
+                }
+              }
+            }
+            // debugPrint("errorMessage:: $errorMessage");
+            // final cleanedMessage = cleanErrorMessage(entry, message);
+            // handleError(errorMessage, errors: errors);
+          }
+        );
+      },
       builder: (context, state) {
+        String error = capitalizeFirstLetter(errorMessage.toString());
         return SafeArea(
+
           child: state.maybeWhen(
               orElse: () {
-                return Container();
+                return Center(
+                  child: TextViewBold(
+                    onTap: () {
+                      _cubit.getSecret();
+                    },
+                      text:
+                      "$error error occurred\nClick to retry",
+                      color: AppTheme.darkColor,
+                      fontSize: 16),
+                );
               },
               loading: () => const LoadingView(),
               success: (response) {

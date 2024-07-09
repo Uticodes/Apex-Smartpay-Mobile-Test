@@ -36,7 +36,7 @@ I also use simple and understandable naming practice.
 * Clone this project from Github to your machine
 * Import project to Android Studio using the latest version (Android Studio Iguana and above)
 * Run `dart run build_runner build --delete-conflicting-outputs` to build all annotations on the app
-* To install the app on your device, you can get the apk from this link: build/app/outputs/flutter-apk/app-release.apk
+* To install the app on your device, you can get the apk from this [link:] (https://drive.google.com/drive/folders/1DVUiVaoEeMOf-rPzXAFouWClCSn17rFv?usp=sharing)
 
 
 ## To-do

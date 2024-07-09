@@ -81,7 +81,7 @@ void handleError(String errorMessage, {Map<String, List<String>>? errors}) {
   if (errors != null && errors.isNotEmpty) {
     for (var entry in errors.entries) {
       for (var message in entry.value) {
-        final cleanedMessage = _cleanErrorMessage(entry, message);
+        final cleanedMessage = cleanErrorMessage(entry, message);
         FlushBarUtil.error(cleanedMessage);
         debugPrint("errorsMessage:: $cleanedMessage");
       }
@@ -90,8 +90,14 @@ void handleError(String errorMessage, {Map<String, List<String>>? errors}) {
   debugPrint("errorMessage:: $errorMessage");
 }
 
-String _cleanErrorMessage(MapEntry<String, List<String>> entry, String message) {
+String cleanErrorMessage(MapEntry<String, List<String>> entry, String message) {
   final regex = RegExp(r'(\[|\])');
   return message.replaceAll(regex, '');
 }
+
+String capitalizeFirstLetter(String input) {
+  if (input.isEmpty) return input;
+  return input[0].toUpperCase() + input.substring(1);
+}
+
 

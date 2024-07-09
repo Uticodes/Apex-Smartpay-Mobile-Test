@@ -101,111 +101,121 @@ class _CustomTextFieldState extends State<CustomTextField> {
     InputDecorationTheme theme = Theme.of(context).inputDecorationTheme;
     final bool isDarkMode = context.colorScheme.brightness == Brightness.dark;
     debugPrint("theme isFilled ==> ${theme.filled}");
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextFormField(
-          textAlign: widget.textAlign,
-          maxLines: widget.maxLines,
-          controller: widget.controller,
-          validator: widget.validator,
-          onChanged: widget.onChanged,
-          readOnly: widget.isReadOnly,
-          onTap: widget.onTap,
-          cursorColor: widget.cursorColor ?? AppTheme.darkColor,
-          keyboardType: widget.keyboardType,
-          obscureText: isPasswordField ? _obscureText : widget.obscureText,
-          textInputAction: widget.textInputAction,
-          style: context.textTheme.titleMedium?.copyWith(
-              fontSize: widget.fontSize,
-              fontWeight: FontWeight.w600,
-              color: AppTheme.darkColor,
-              decoration: TextDecoration.none),
-          inputFormatters: inputFormatters,
-          maxLength: widget.maxLength,
-          decoration: InputDecoration(
-            counterText: "",
-            filled: widget.isFilled ?? theme.filled,
-            hintText: widget.hintText,
-            hintStyle: const TextStyle(
-                fontFamily: fontFamily,
-                color: AppTheme.greyColor,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                fontStyle: FontStyle.normal,
-                decoration: TextDecoration.none,
-                height: 1.5),
-            isDense: theme.isDense,
-            fillColor: widget.filledColor ?? theme.fillColor,
-            border: widget.enabledTextFieldBorder
-                ? OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color:
-                          !isDarkMode ? AppTheme.grey100 : AppTheme.faintBlack,
-                      width: widget.borderWidth,
-                    ),
-                    borderRadius: widget.textFieldBorderRadius,
-                  )
-                : theme.border,
-            focusedBorder: widget.enabledTextFieldBorder
-                ? OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color:
-                          !isDarkMode ? AppTheme.grey100 : AppTheme.faintBlack,
-                      width: widget.borderWidth,
-                    ),
-                    borderRadius: widget.textFieldBorderRadius,
-                  )
-                : theme.focusedBorder,
-            enabledBorder: widget.enabledTextFieldBorder
-                ? OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color:
-                          !isDarkMode ? AppTheme.grey100 : AppTheme.faintBlack,
-                      width: widget.borderWidth,
-                    ),
-                    borderRadius: widget.textFieldBorderRadius,
-                  )
-                : theme.enabledBorder,
-            errorBorder: theme.errorBorder ??
-                const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.red),
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
-                ),
-            focusedErrorBorder: InputBorder.none,
-            suffixIcon: isPasswordField
-                ? IconButton(
-                    icon: SvgPicture.asset(
-                      _obscureText
-                          ? AppImages.icVisibilityOff
-                          : AppImages.icVisibilityOn,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: widget.suffixIcon,
+    return Theme(
+      data: ThemeData(
+        canvasColor: Colors.blue,
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppTheme.darkColor,
+          selectionColor: Colors.lightBlue.shade200,
+          selectionHandleColor: AppTheme.darkColor,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            textAlign: widget.textAlign,
+            maxLines: widget.maxLines,
+            controller: widget.controller,
+            validator: widget.validator,
+            onChanged: widget.onChanged,
+            readOnly: widget.isReadOnly,
+            onTap: widget.onTap,
+            cursorColor: widget.cursorColor ?? AppTheme.darkColor,
+            keyboardType: widget.keyboardType,
+            obscureText: isPasswordField ? _obscureText : widget.obscureText,
+            textInputAction: widget.textInputAction,
+            style: context.textTheme.titleMedium?.copyWith(
+                fontSize: widget.fontSize,
+                fontWeight: FontWeight.w600,
+                color: AppTheme.darkColor,
+                decoration: TextDecoration.none),
+            inputFormatters: inputFormatters,
+            maxLength: widget.maxLength,
+            decoration: InputDecoration(
+              counterText: "",
+              filled: widget.isFilled ?? theme.filled,
+              hintText: widget.hintText,
+              hintStyle: const TextStyle(
+                  fontFamily: fontFamily,
+                  color: AppTheme.greyColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  decoration: TextDecoration.none,
+                  height: 1.5),
+              isDense: theme.isDense,
+              fillColor: widget.filledColor ?? theme.fillColor,
+              border: widget.enabledTextFieldBorder
+                  ? OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color:
+                            !isDarkMode ? AppTheme.grey100 : AppTheme.faintBlack,
+                        width: widget.borderWidth,
+                      ),
+                      borderRadius: widget.textFieldBorderRadius,
+                    )
+                  : theme.border,
+              focusedBorder: widget.enabledTextFieldBorder
+                  ? OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color:
+                            !isDarkMode ? AppTheme.grey100 : AppTheme.faintBlack,
+                        width: widget.borderWidth,
+                      ),
+                      borderRadius: widget.textFieldBorderRadius,
+                    )
+                  : theme.focusedBorder,
+              enabledBorder: widget.enabledTextFieldBorder
+                  ? OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color:
+                            !isDarkMode ? AppTheme.grey100 : AppTheme.faintBlack,
+                        width: widget.borderWidth,
+                      ),
+                      borderRadius: widget.textFieldBorderRadius,
+                    )
+                  : theme.enabledBorder,
+              errorBorder: theme.errorBorder ??
+                  const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
                   ),
-            contentPadding: EdgeInsets.only(
-              top: widget.maxLines > 1 ? 40.0 : 12.0,
-              left: 10,
-              bottom: widget.prefixIcon != null || widget.suffixIcon != null
-                  ? 5.0
-                  : 0.0,
+              focusedErrorBorder: InputBorder.none,
+              suffixIcon: isPasswordField
+                  ? IconButton(
+                      icon: SvgPicture.asset(
+                        _obscureText
+                            ? AppImages.icVisibilityOff
+                            : AppImages.icVisibilityOn,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(13.0),
+                      child: widget.suffixIcon,
+                    ),
+              contentPadding: EdgeInsets.only(
+                top: widget.maxLines > 1 ? 40.0 : 12.0,
+                left: 10,
+                bottom: widget.prefixIcon != null || widget.suffixIcon != null
+                    ? 5.0
+                    : 0.0,
+              ),
+              prefixIcon: widget.prefixIcon != null
+                  ? Padding(
+                      padding: const EdgeInsets.all(13.0),
+                      child: widget.prefixIcon,
+                    )
+                  : null,
             ),
-            prefixIcon: widget.prefixIcon != null
-                ? Padding(
-                    padding: const EdgeInsets.all(13.0),
-                    child: widget.prefixIcon,
-                  )
-                : null,
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }
